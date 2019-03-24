@@ -8,6 +8,9 @@ var indexRouter = require('./routes/index');
 
 var app = express();
 
+//call db
+const db = require("./helpers/db")();
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
