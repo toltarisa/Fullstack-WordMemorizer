@@ -49,6 +49,7 @@ const styles = theme => ({
     height: '100%',
     display: 'flex',
     flexDirection: 'column',
+    boxShadow: '0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)'
   },
   cardMedia: {
     paddingTop: '56.25%', // 16:9
@@ -111,13 +112,13 @@ function Album(props) {
                     </Typography>
                   </CardContent>
                   <CardActions>
-                    <Button size="small" color="primary">
+                    <Button variant="outlined" size="small" color="secondary">
                       View
                     </Button>
-                    <Button size="small" color="primary">
+                    <Button variant="outlined" size="small" color="secondary">
                       Edit
                     </Button>
-                    <Button size="small" color="primary">
+                    <Button variant="outlined" size="small" color="secondary">
                       Delete
                     </Button>
                   </CardActions>

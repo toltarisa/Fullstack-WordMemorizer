@@ -15,7 +15,8 @@ const WordSchema = new Schema({
         required:true
     },
     exampleSentence: {
-        type:String
+        type:String,
+        required:true
     },
     createdAt: {
         type:Date,
