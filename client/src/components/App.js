@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import '../styles/App.css';
-import Word from '../components/Words';
+import Word from './pages/Words';
 
 class App extends Component {
   render() {

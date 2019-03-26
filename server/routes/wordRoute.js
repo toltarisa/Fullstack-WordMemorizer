@@ -1,5 +1,5 @@
 const express = require('express');
-const router = express.Router;
+const router = express.Router();
 const Word = require('../models/Word');
 
 // add a word
@@ -50,7 +50,6 @@ router.put('/update/:id', (req,res)=> {
         })
 });
 
-
 //delete a word
 router.delete('/delete/:id', (req,res)=> {
     let query = {_id : req.params.id};
@@ -62,10 +61,5 @@ router.delete('/delete/:id', (req,res)=> {
             res.json(err);
         })
 })
-
-
-
-
-
 
 module.exports = router;
