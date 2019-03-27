@@ -33,7 +33,7 @@ const Showcase = (props) => {
              FullStack Word Memorizer
             </Typography>
             <Typography variant="h6" align="center" color="textSecondary" paragraph>
-              Ezberlemek istediğin ingilizce kelimelerin mi var ? O zaman hemen ezberlemek istediğin kelimeleri ekle ve kendini test et 
+              Ezberlemek istediğin ingilizce kelimelerin mi var ? O zaman ezberlemek istediğin kelimeleri ekle ve kendini test et 
             </Typography>
             <div className={classes.heroButtons}>
               <Grid container spacing={16} justify="center">
