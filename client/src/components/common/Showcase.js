@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
+import FormDialog from '../common/Form';
 
 const styles = theme =>({
     heroUnit: {
@@ -23,6 +24,11 @@ const styles = theme =>({
         marginRight : theme.spacing.unit * 7
     }
 });
+
+
+// function handleClick(e){
+//   console.log("Clicked");
+// }
 
 const Showcase = (props) => {
     const { classes } = props;

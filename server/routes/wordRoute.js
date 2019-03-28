@@ -8,7 +8,7 @@ router.post('/', (req,res)=> {
 
     newWord.save()
             .then(data => {
-                res.json(data);
+                res.status(201.).json(data);
             })
             .catch(err=> {
                 res.json(err);
@@ -17,7 +17,7 @@ router.post('/', (req,res)=> {
 });
 //get all words
 router.get('/', (req,res)=> {
-    newWord.find({})
+    Word.find({})
             .then(data=> {
                 res.json(data);
             })
@@ -54,8 +54,8 @@ router.put('/update/:id', (req,res)=> {
 router.delete('/delete/:id', (req,res)=> {
     let query = {_id : req.params.id};
     Word.findByIdAndRemove(query)
-        .then((data)=>{
-            res.json(data);
+        .then(()=>{
+            res.json({message:"Object deleted"});
         })
         .catch(err =>{
             res.json(err);
