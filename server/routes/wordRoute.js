@@ -3,31 +3,29 @@ const router = express.Router();
 const Word = require('../models/Word');
 
 // add a word
-router.post('/', (req,res)=> {
+router.post('/', async (req,res)=> {
     let newWord = new Word(req.body);
+    try {
+        await newWord.save();
+        res.status(201).send({response: 'Object Created'})
 
-    newWord.save()
-            .then(data => {
-                res.status(201.).json(data);
-            })
-            .catch(err=> {
-                res.json(err);
-            });
+    } catch (err) {
+        res.status(500).send(err);
+    }
 
 });
 //get all words
-router.get('/', (req,res)=> {
-    Word.find({})
-            .then(data=> {
-                res.json(data);
-            })
-            .catch(err=> {
-                res.json(err);
-            })
+router.get('/', async (req,res)=> {
+    try {
+       let words = await Word.find({});
+        res.status(200).send(words);
+    } catch (err) {
+        res.status(500).send(err);
+    }
 });
 
 //get a word by id
-router.get('/:id',(req,res) =>{
+router.get('/:id',async (req,res) =>{
     let query = {_id : req.params.id};
     Word.findById(query)
         .then(data =>{
@@ -51,15 +49,16 @@ router.put('/update/:id', (req,res)=> {
 });
 
 //delete a word
-router.delete('/delete/:id', (req,res)=> {
+router.delete('/delete/:id',async (req,res)=> {
     let query = {_id : req.params.id};
-    Word.findByIdAndRemove(query)
-        .then(()=>{
-            res.json({message:"Object deleted"});
-        })
-        .catch(err =>{
-            res.json(err);
-        })
+    
+    try {
+        await Word.findByIdAndRemove(query);
+        res.status(200).send({response:'object deleted'});
+
+    } catch (error) {
+        res.status(500).send(error);
+    }
 })
 
 module.exports = router;
