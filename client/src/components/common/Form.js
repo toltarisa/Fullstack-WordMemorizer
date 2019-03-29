@@ -7,27 +7,11 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-export default class FormDialog extends React.Component {
-  state = {
-    open: false,
-  };
-
-  handleClickOpen = () => {
-    this.setState({ open: true });
-  };
-
-  handleClose = () => {
-    this.setState({ open: false });
-  };
-
+export default class FormDialog extends React.Component {  
   render() {
     return (
-      <div>
-        <Button variant="outlined" color="primary" onClick={this.handleClickOpen}>
-          Open form dialog
-        </Button>
         <Dialog
-          open={this.state.open}
+          open={this.props.open}
           onClose={this.handleClose}
           aria-labelledby="form-dialog-title"
         >
@@ -39,23 +23,48 @@ export default class FormDialog extends React.Component {
             </DialogContentText>
             <TextField
               autoFocus
-              margin="dense"
-              id="name"
-              label="Email Address"
-              type="email"
+              margin="normal"
+              id="word"
+              label="İngilizce Kelimeyi Girin"
+              type="text"
               fullWidth
             />
+            <TextField
+              autoFocus
+              margin="normal"
+              id="translate"
+              label="Kelimenin Cevirisini Girin"
+              type="text"
+              fullWidth
+            />
+            <TextField
+              autoFocus
+              margin="normal"
+              id="tur"
+              label="Kelimenin Turunu Girin"
+              type="text"
+              fullWidth
+            />
+            <TextField
+              autoFocus
+              margin="normal"
+              id="ornekCumle"
+              label="Ornek Cumle Girin"
+              type="text"
+              fullWidth
+            />
+            
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.handleClose} color="primary">
-              Cancel
+            <Button variant="outlined" onClick={this.props.close} color="primary">
+              Kapat
             </Button>
-            <Button onClick={this.handleClose} color="primary">
-              Subscribe
+            <Button variant="outlined" onClick={this.props.close} color="primary">
+              Kelimeyi Ekle
             </Button>
           </DialogActions>
         </Dialog>
-      </div>
+    
     );
   }
 }
