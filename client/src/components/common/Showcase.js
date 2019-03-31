@@ -6,6 +6,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import FormDialog from './Form';
+//import axios from 'axios';
 
 const styles = theme =>({
     heroUnit: {
@@ -26,11 +27,32 @@ const styles = theme =>({
 });
 
 class ShowCase extends Component {
-    state = { 
-        open:false
-     }
+    constructor(props){
+        super(props);
+
+        this.state = { 
+            open:false,
+            word:'',
+            translate:'',
+            kind:'',
+            example:''
+         }
+         
+    }     
+
     openDialog = () => {
         this.setState({open :!this.state.open});
+    }
+
+    handleInput = (e) => {
+        // this.setState({
+        //     [e.target.name]: e.target.value
+        // });
+        console.log(e.target.value);
+    }
+
+    handleSubmit = () => {
+
     }
     render() { 
         const  {classes } = this.props; 
@@ -47,7 +69,7 @@ class ShowCase extends Component {
                 <div className={classes.heroButtons}>
                 <Grid container spacing={16} justify="center">
                     <Grid item>
-                    <FormDialog open={this.state.open}  close={this.openDialog} />
+                    <FormDialog onChange={this.handleInput} open={this.state.open}  close={this.openDialog} />
                     <Fab onClick={this.openDialog} color="primary" aria-label="Add" className={classes.fab}>
                         <AddIcon />
                     </Fab>
