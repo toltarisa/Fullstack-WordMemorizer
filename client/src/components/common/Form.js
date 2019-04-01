@@ -11,7 +11,7 @@ export default class FormDialog extends React.Component {
     return (
         <Dialog
           open={this.props.open}
-          onClose={this.handleClose}
+          onClose={this.openDialog}
           aria-labelledby="form-dialog-title"
         >
           <DialogTitle id="form-dialog-title">Kelime Bilgilerini Giriniz</DialogTitle>
@@ -21,6 +21,7 @@ export default class FormDialog extends React.Component {
               autoFocus
               name="word"
               margin="normal"
+              value={this.props.word}
               id="word"
               label="İngilizce Kelimeyi Girin"
               type="text"
@@ -31,6 +32,7 @@ export default class FormDialog extends React.Component {
               autoFocus
               name="translate"
               margin="normal"
+              value={this.props.translate}
               id="translate"
               label="Kelimenin Cevirisini Girin"
               type="text"
@@ -41,6 +43,7 @@ export default class FormDialog extends React.Component {
               autoFocus
               name="kind"
               margin="normal"
+              value={this.props.kind}
               id="tur"
               label="Kelimenin Türünü Girin"
               type="text"
@@ -51,6 +54,7 @@ export default class FormDialog extends React.Component {
               autoFocus
               name="example"
               margin="normal"
+              value={this.props.example}
               id="ornekCumle"
               label="Ornek Cumle Girin"
               type="text"

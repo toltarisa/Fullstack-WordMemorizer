@@ -37,17 +37,17 @@ class ShowCase extends Component {
             kind:'',
             example:''
          }
-         
+         this.handleInput = this.handleInput.bind(this);
     }     
 
     openDialog = () => {
-        this.setState({open :!this.state.open});
+        this.setState({open : !this.state.open});
     }
 
     handleInput = (e) => {
-        // this.setState({
-        //     [e.target.name]: e.target.value
-        // });
+        this.setState({
+            [e.target.name]: e.target.value
+        });
         console.log(e.target.value);
     }
 
@@ -69,7 +69,7 @@ class ShowCase extends Component {
                 <div className={classes.heroButtons}>
                 <Grid container spacing={16} justify="center">
                     <Grid item>
-                    <FormDialog onChange={this.handleInput} open={this.state.open}  close={this.openDialog} />
+                    <FormDialog onChange={this.handleInput} open={this.state.open} value={this.state.word}  close={this.openDialog} />
                     <Fab onClick={this.openDialog} color="primary" aria-label="Add" className={classes.fab}>
                         <AddIcon />
                     </Fab>
