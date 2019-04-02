@@ -8,6 +8,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 export default class FormDialog extends React.Component {  
   render() {
+    console.log(this.props);
     return (
         <Dialog
           open={this.props.open}
@@ -16,12 +17,11 @@ export default class FormDialog extends React.Component {
         >
           <DialogTitle id="form-dialog-title">Kelime Bilgilerini Giriniz</DialogTitle>
           <DialogContent>
-            <form>
+            
             <TextField
               autoFocus
               name="word"
               margin="normal"
-              value={this.props.word}
               id="word"
               label="İngilizce Kelimeyi Girin"
               type="text"
@@ -32,7 +32,6 @@ export default class FormDialog extends React.Component {
               autoFocus
               name="translate"
               margin="normal"
-              value={this.props.translate}
               id="translate"
               label="Kelimenin Cevirisini Girin"
               type="text"
@@ -43,7 +42,6 @@ export default class FormDialog extends React.Component {
               autoFocus
               name="kind"
               margin="normal"
-              value={this.props.kind}
               id="tur"
               label="Kelimenin Türünü Girin"
               type="text"
@@ -54,14 +52,13 @@ export default class FormDialog extends React.Component {
               autoFocus
               name="example"
               margin="normal"
-              value={this.props.example}
               id="ornekCumle"
               label="Ornek Cumle Girin"
               type="text"
               onChange={this.handleInput}
               fullWidth
             />
-            </form>
+            
             
           </DialogContent>
           <DialogActions>

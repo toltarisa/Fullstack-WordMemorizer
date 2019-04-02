@@ -27,6 +27,7 @@ const styles = theme =>({
 });
 
 class ShowCase extends Component {
+    
     constructor(props){
         super(props);
 
@@ -69,7 +70,7 @@ class ShowCase extends Component {
                 <div className={classes.heroButtons}>
                 <Grid container spacing={16} justify="center">
                     <Grid item>
-                    <FormDialog onChange={this.handleInput} open={this.state.open} value={this.state.word}  close={this.openDialog} />
+                    <FormDialog onInput={this.handleInput} open={this.state.open} close={this.openDialog} />
                     <Fab onClick={this.openDialog} color="primary" aria-label="Add" className={classes.fab}>
                         <AddIcon />
                     </Fab>
