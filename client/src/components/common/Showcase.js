@@ -6,7 +6,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import FormDialog from './Form';
-//import axios from 'axios';
+import axios from 'axios';
 
 const styles = theme =>({
     heroUnit: {
@@ -38,7 +38,6 @@ class ShowCase extends Component {
             kind:'',
             example:''
          }
-         this.handleInput = this.handleInput.bind(this);
     }     
 
     openDialog = () => {
@@ -48,15 +47,40 @@ class ShowCase extends Component {
     handleInput = (e) => {
         this.setState({
             [e.target.name]: e.target.value
+        });   
+    }
+    postRequest = () => {
+        axios.post('http://localhost:3001/words', {
+            word:this.state.word,
+            translate:this.state.translate,
+            kind: this.state.kind,
+            example: this.state.example
+        })
+        .then(res => {
+            if(res.data.message)
+                alert(res.data.message);
+            else{
+                this.setState({
+                    word:null,
+                    translate:null,
+                    kind:null,
+                    example: null
+                })
+            }
+            console.log(res);
+        })
+        .catch(err => {
+            throw err;
         });
-        console.log(e.target.value);
+        
     }
 
-    handleSubmit = () => {
-
+    componentDidMount(){
+        this.postRequest();
     }
     render() { 
-        const  {classes } = this.props; 
+        
+        const  { classes } = this.props; 
         return ( 
         <div>
             <div className={classes.heroUnit}>
@@ -70,7 +94,7 @@ class ShowCase extends Component {
                 <div className={classes.heroButtons}>
                 <Grid container spacing={16} justify="center">
                     <Grid item>
-                    <FormDialog onInput={this.handleInput} open={this.state.open} close={this.openDialog} />
+                    <FormDialog onRequest={this.componentDidMount} onInput={this.handleInput}  open={this.state.open} close={this.openDialog} />
                     <Fab onClick={this.openDialog} color="primary" aria-label="Add" className={classes.fab}>
                         <AddIcon />
                     </Fab>

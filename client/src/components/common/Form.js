@@ -8,7 +8,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 export default class FormDialog extends React.Component {  
   render() {
-    console.log(this.props);
+    
     return (
         <Dialog
           open={this.props.open}
@@ -17,7 +17,6 @@ export default class FormDialog extends React.Component {
         >
           <DialogTitle id="form-dialog-title">Kelime Bilgilerini Giriniz</DialogTitle>
           <DialogContent>
-            
             <TextField
               autoFocus
               name="word"
@@ -25,7 +24,8 @@ export default class FormDialog extends React.Component {
               id="word"
               label="İngilizce Kelimeyi Girin"
               type="text"
-              onChange={this.handleInput}
+              onChange={this.props.onInput}
+              value={this.props.input}
               fullWidth
             />
             <TextField
@@ -35,7 +35,7 @@ export default class FormDialog extends React.Component {
               id="translate"
               label="Kelimenin Cevirisini Girin"
               type="text"
-              onChange={this.handleInput}
+              onChange={this.props.onInput}
               fullWidth
             />
             <TextField
@@ -45,7 +45,7 @@ export default class FormDialog extends React.Component {
               id="tur"
               label="Kelimenin Türünü Girin"
               type="text"
-              onChange={this.handleInput}
+              onChange={this.props.onInput}
               fullWidth
             />
             <TextField
@@ -55,17 +55,17 @@ export default class FormDialog extends React.Component {
               id="ornekCumle"
               label="Ornek Cumle Girin"
               type="text"
-              onChange={this.handleInput}
+              onChange={this.props.onInput}
               fullWidth
             />
             
-            
+           
           </DialogContent>
           <DialogActions>
             <Button variant="outlined" onClick={this.props.close} color="primary">
               Kapat
             </Button>
-            <Button variant="outlined" onClick={this.props.close} color="primary">
+            <Button variant="outlined" onClick={this.props.onRequest} color="primary">
               Kelimeyi Ekle
             </Button>
           </DialogActions>
