@@ -25,7 +25,7 @@ const styles = theme =>({
         marginRight : theme.spacing.unit * 7
     }
 });
-
+const url = "http://localhost:3001/words";
 class ShowCase extends Component {
     
     constructor(props){
@@ -51,16 +51,18 @@ class ShowCase extends Component {
             [e.target.name]: e.target.value
         });   
     }
+    
     postRequest = () => {
-        axios.post('http://localhost:3001/words', {
+        axios.post(url, {
             word:this.state.word,
             translate:this.state.translate,
             kind: this.state.kind,
             example: this.state.example
         })
         .then(res => {
-            if(res.data.message)
-                alert(res.data.message);
+            if(res.status === 200){
+                
+            }
             else{
                 this.setState({
                     word:null,
@@ -77,9 +79,6 @@ class ShowCase extends Component {
         
     }
 
-    componentDidMount(){
-        this.postRequest();
-    }
     render() { 
         
         const  { classes } = this.props; 
@@ -96,7 +95,7 @@ class ShowCase extends Component {
                 <div className={classes.heroButtons}>
                 <Grid container spacing={16} justify="center">
                     <Grid item>
-                    <FormDialog onRequest={this.componentDidMount} onInput={this.handleInput}  open={this.state.open} close={this.openDialog} />
+                    <FormDialog onRequest={this.postRequest} onInput={this.handleInput}  open={this.state.open} close={this.openDialog} />
                     <Fab onClick={this.openDialog} color="primary" aria-label="Add" className={classes.fab}>
                         <AddIcon />
                     </Fab>

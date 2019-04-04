@@ -27,6 +27,7 @@ export default class FormDialog extends React.Component {
               onChange={this.props.onInput}
               value={this.props.input}
               fullWidth
+              required
             />
             <TextField
               autoFocus
@@ -37,6 +38,7 @@ export default class FormDialog extends React.Component {
               type="text"
               onChange={this.props.onInput}
               fullWidth
+              required
             />
             <TextField
               autoFocus
@@ -47,6 +49,7 @@ export default class FormDialog extends React.Component {
               type="text"
               onChange={this.props.onInput}
               fullWidth
+              required
             />
             <TextField
               autoFocus
@@ -57,6 +60,7 @@ export default class FormDialog extends React.Component {
               type="text"
               onChange={this.props.onInput}
               fullWidth
+              required
             />
             
            
