@@ -9,7 +9,8 @@
     "axios": "^0.18.0",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
-    "react-scripts": "2.1.8"
+    "react-scripts": "2.1.8",
+    "toastify-js": "^1.3.2"
   },
   "scripts": {
     "start": "react-scripts start",

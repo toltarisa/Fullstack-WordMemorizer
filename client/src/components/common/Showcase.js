@@ -7,6 +7,7 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import FormDialog from './Form';
 import axios from 'axios';
+import Toastify from 'toastify-js';
 
 const styles = theme =>({
     heroUnit: {
@@ -60,8 +61,16 @@ class ShowCase extends Component {
             example: this.state.example
         })
         .then(res => {
-            if(res.status === 200){
-                
+            if(res.status === 201){
+                Toastify({
+                    text: "Kelimeniz Sisteme Eklendi",
+                    backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
+                    positionLeft:true,
+                    duration:4000,
+                    gravity:"bottom"
+
+                }).showToast();
+                this.openDialog();
             }
             else{
                 this.setState({
@@ -75,8 +84,7 @@ class ShowCase extends Component {
         })
         .catch(err => {
             throw err;
-        });
-        
+        });  
     }
 
     render() { 
