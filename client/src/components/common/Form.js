@@ -62,8 +62,6 @@ export default class FormDialog extends React.Component {
               fullWidth
               required
             />
-            
-           
           </DialogContent>
           <DialogActions>
             <Button variant="outlined" onClick={this.props.close} color="primary">
@@ -74,7 +72,6 @@ export default class FormDialog extends React.Component {
             </Button>
           </DialogActions>
         </Dialog>
-    
     );
   }
 }
