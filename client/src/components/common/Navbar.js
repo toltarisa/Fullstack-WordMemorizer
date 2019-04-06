@@ -4,6 +4,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
+//import { Link } from 'react-router';
 
 const styles = {
   root: {
@@ -28,6 +29,7 @@ const  Navbar = props =>{
                 Word Memorizer
               </Typography>
               <Button className={classes.btn} variant="outlined" color="inherit">Ana Sayfa</Button>
+              <Button className={classes.btn} variant="outlined" color="inherit">Kelimelerim</Button>
               <Button variant="outlined" color="inherit">Kelimelerim</Button>
             </Toolbar>
         </AppBar>
