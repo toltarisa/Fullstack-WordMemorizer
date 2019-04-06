@@ -126,7 +126,7 @@ class ShowCase extends Component {
                   </Fab>
                 </Grid>
                 <Grid item>
-                  <Button variant="outlined" color="primary">
+                  <Button href="/words" variant="outlined" color="primary">
                     Kelimelerim
                   </Button>
                 </Grid>

@@ -4,7 +4,10 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
-//import { Link } from 'react-router';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faIgloo } from '@fortawesome/free-solid-svg-icons';
+library.add(faIgloo);
+
 
 const styles = {
   root: {
@@ -28,14 +31,17 @@ const  Navbar = props =>{
               <Typography className={classes.grow} variant="h6" color="inherit" noWrap>
                 Word Memorizer
               </Typography>
-              <Button className={classes.btn} variant="outlined" color="inherit">Ana Sayfa</Button>
-              <Button className={classes.btn} variant="outlined" color="inherit">Kelimelerim</Button>
-              <Button variant="outlined" color="inherit">Kelimelerim</Button>
+              <Button href="/" className={classes.btn} variant="outlined" color="inherit">Ana Sayfa
+              </Button>
+              <Button href="/words" className={classes.btn} variant="outlined" color="inherit">Kelimelerim</Button>
+              <Button href="/start" variant="outlined" color="inherit">Test Et</Button>
             </Toolbar>
         </AppBar>
         </div>
       </div>
     );
 }
+
+
 
 export default withStyles(styles)(Navbar);

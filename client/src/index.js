@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './components/App';
-import { Route, Link, BrowserRouter as Router,Switch } from 'react-router-dom';
+import { Route,  BrowserRouter as Router,Switch } from 'react-router-dom';
 import WordsPage from './components/pages/Words';
 import NotFound from './components/pages/NotFound';
 
