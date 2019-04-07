@@ -29,9 +29,6 @@ const CardComponent = props => {
         </CardContent>
         <CardActions>
           <Button variant="outlined" size="small" color="secondary">
-            View
-          </Button>
-          <Button variant="outlined" size="small" color="secondary">
             Edit
           </Button>
           <Button variant="outlined" size="small" color="secondary">
