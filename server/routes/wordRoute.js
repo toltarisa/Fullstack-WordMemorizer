@@ -5,13 +5,7 @@ const Word = require('../models/Word');
 // add a word
 router.post('/',  async (req,res)=> {
     let newWord = new Word(req.body);
-    // newWord.save()
-    //         .then(msg => {
-    //             console.log("Object saved");
-    //         })
-    //         .catch(err=>{
-    //             console.log(err);
-    //         })
+    
     try {
         await newWord.save();
         res.status(201).send({response: 'Object Created'})

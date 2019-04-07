@@ -4,10 +4,6 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import { withStyles } from "@material-ui/core/styles";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { faIgloo } from "@fortawesome/free-solid-svg-icons";
-library.add(faIgloo);
-
 const styles = {
   root: {
     flexGrow: 1
@@ -19,6 +15,7 @@ const styles = {
     marginRight: "10px"
   }
 };
+
 const Navbar = props => {
   const { classes } = props;
   return (

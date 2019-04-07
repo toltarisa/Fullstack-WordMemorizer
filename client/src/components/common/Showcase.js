@@ -56,7 +56,7 @@ class ShowCase extends Component {
         word: this.state.word,
         translate: this.state.translate,
         kind: this.state.kind,
-        example: this.state.example
+        exampleSentence: this.state.example
       })
       .then(res => {
         if (res.status === 201) {
