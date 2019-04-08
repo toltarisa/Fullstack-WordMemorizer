@@ -40,7 +40,8 @@ const styles = theme => ({
     boxShadow: "0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)"
   },
   cardMedia: {
-    paddingTop: "56.25%" // 16:9
+    paddingTop: "56.25%" ,// 16:9
+    height:"50%"
   },
   cardContent: {
     flexGrow: 1
