@@ -9,7 +9,11 @@ import Typography from "@material-ui/core/Typography";
 class CardComponent extends Component {
   state = {};
   render() {
-    console.log(this.props);
+    const word =  this.props.words.map(obj=>obj.word);
+    const translate =  this.props.words.map(obj=>obj.translate);
+    const kind =  this.props.words.map(obj=>obj.kind);
+    const exampleSentence =  this.props.words.map(obj=>obj.exampleSentence);
+     console.log(word);
     return (
       <div>
         <Card className={this.props.classes.card}>
@@ -20,16 +24,16 @@ class CardComponent extends Component {
           />
           <CardContent className={this.props.classes.cardContent}>
             <Typography gutterBottom variant="subtitle">
-              <b>Kelime :</b>
+              <b>Kelime : {/*data.obj.word*/} </b>
             </Typography>
             <Typography gutterBottom variant="subtitle">
-              <b>Çevirisi: </b>
+              <b>Çevirisi: {/*data.obj.translate*/}</b>
             </Typography>
             <Typography gutterBottom variant="subtitle">
-              <b>Türü :</b>
+              <b>Türü :{/*data.obj*.kind*/}</b>
             </Typography>
             <Typography gutterBottom variant="subtitle">
-              <b>Örnek : </b>
+              <b>Örnek : {/*data.obj*.exampleSentence*/} </b>
             </Typography>
             <Typography variant="subtitle" component="h5">
               <b>Eklenme Tarihi:</b>

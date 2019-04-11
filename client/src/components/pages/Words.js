@@ -63,6 +63,7 @@ class Album extends Component {
       err: "",
       loading:true
     };
+    this.getWordData = this.getWordData.bind(this);
   }
   componentDidMount(){
     this.getWordData();
