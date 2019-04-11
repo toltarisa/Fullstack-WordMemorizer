@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -7,6 +7,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Navbar from "../common/Navbar";
 import HeroUnit from "../utils/HeroUnit";
 import Card from "../utils/Card";
+import axios from "axios";
 
 const styles = theme => ({
   appBar: {
@@ -40,8 +41,8 @@ const styles = theme => ({
     boxShadow: "0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)"
   },
   cardMedia: {
-    paddingTop: "56.25%" ,// 16:9
-    height:"50%"
+    paddingTop: "56.25%", // 16:9
+    height: "50%"
   },
   cardContent: {
     flexGrow: 1
@@ -52,29 +53,65 @@ const styles = theme => ({
   }
 });
 
-const cards = [1, 2, 3, 4, 5, 6, 7, 8];
 
-function Album(props) {
-  const { classes } = props;
 
-  return (
-    <React.Fragment>
-      <CssBaseline />
-      <Navbar className={classes.appBar} />
-      <main>
-        <HeroUnit classes={classes} />
-        <div className={classNames(classes.layout, classes.cardGrid)}>
-          <Grid container spacing={40}>
-            {cards.map(card => (
-              <Grid item key={card} sm={6} md={4} lg={3}>
-                <Card classes={classes} />
-              </Grid>
-            ))}
-          </Grid>
-        </div>
-      </main>
-    </React.Fragment>
-  );
+class Album extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      words: [],
+      err: "",
+      loading:true
+    };
+  }
+
+  getWordData = () => {
+    axios.get("http://localhost:3001/words").then(res => {
+      this.setState({
+        words: res.data,
+        err: ""
+      });
+    }).then( ()=> {
+      this.setState({
+        loading:false
+      })
+    }).catch(res => {
+      if(!res.response){
+        this.setState({
+          loading:true,
+          err:res
+        })
+      }
+      else{
+        this.setState({
+          loading:false,
+          err:res
+        })
+      }
+    });
+  };
+  render() {
+    const cards = [1, 2, 3, 4, 5, 6, 7, 8];
+    const { classes } = this.props;
+    return (
+      <React.Fragment>
+        <CssBaseline />
+        <Navbar className={classes.appBar} />
+        <main>
+          <HeroUnit classes={classes} />
+          <div className={classNames(classes.layout, classes.cardGrid)}>
+            <Grid container spacing={40}>
+              {cards.map(card => (
+                <Grid item key={card} sm={6} md={4} lg={3}>
+                  <Card words={this.state.words} classes={classes} />
+                </Grid>
+              ))}
+            </Grid>
+          </div>
+        </main>
+      </React.Fragment>
+    );
+  }
 }
 
 Album.propTypes = {
