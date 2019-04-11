@@ -64,7 +64,9 @@ class Album extends Component {
       loading:true
     };
   }
-
+  componentDidMount(){
+    this.getWordData();
+  }
   getWordData = () => {
     axios.get("http://localhost:3001/words").then(res => {
       this.setState({
@@ -91,7 +93,7 @@ class Album extends Component {
     });
   };
   render() {
-    const cards = [1, 2, 3, 4, 5, 6, 7, 8];
+    const cards = this.state.words;
     const { classes } = this.props;
     return (
       <React.Fragment>
