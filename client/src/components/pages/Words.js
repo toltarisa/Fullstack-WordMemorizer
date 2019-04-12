@@ -106,7 +106,7 @@ class Album extends Component {
             <Grid container spacing={40}>
               {cards.map(card => (
                 <Grid item key={card} sm={6} md={4} lg={3}>
-                  <Card words={this.state.words} classes={classes} />
+                  <Card object={card}  classes={classes} />
                 </Grid>
               ))}
             </Grid>

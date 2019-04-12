@@ -6,14 +6,26 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 
+
 class CardComponent extends Component {
   state = {};
+  isoToNormalDate = (newDate) => {
+    let date = new Date(newDate);
+    let year = date.getFullYear();
+    let month = date.getMonth() + 1;
+    let dt = date.getDate();
+
+    if(dt < 10){
+      dt = '0' + dt;
+    }
+    if(month < 10){
+      month = '0' + month;
+    }
+
+    return dt + '-' + month + '-' + year;
+  }
   render() {
-    const word =  this.props.words.map(obj=>obj.word);
-    const translate =  this.props.words.map(obj=>obj.translate);
-    const kind =  this.props.words.map(obj=>obj.kind);
-    const exampleSentence =  this.props.words.map(obj=>obj.exampleSentence);
-     console.log(word);
+   console.log(this.props.object);
     return (
       <div>
         <Card className={this.props.classes.card}>
@@ -23,20 +35,20 @@ class CardComponent extends Component {
             title="Image title"
           />
           <CardContent className={this.props.classes.cardContent}>
-            <Typography gutterBottom variant="subtitle">
-              <b>Kelime : {/*data.obj.word*/} </b>
+            <Typography gutterBottom variant="subtitle2" >
+              <b>Kelime : </b>{this.props.object.word} 
             </Typography>
-            <Typography gutterBottom variant="subtitle">
-              <b>Çevirisi: {/*data.obj.translate*/}</b>
+            <Typography gutterBottom variant="subtitle2" >
+              <b>Çevirisi: </b> {this.props.object.translate} 
             </Typography>
-            <Typography gutterBottom variant="subtitle">
-              <b>Türü :{/*data.obj*.kind*/}</b>
+            <Typography gutterBottom variant="subtitle2">
+              <b>Türü : </b> {this.props.object.kind} 
             </Typography>
-            <Typography gutterBottom variant="subtitle">
-              <b>Örnek : {/*data.obj*.exampleSentence*/} </b>
+            <Typography gutterBottom variant="subtitle2">
+              <b>Örnek : </b> {this.props.object.exampleSentence} 
             </Typography>
-            <Typography variant="subtitle" component="h5">
-              <b>Eklenme Tarihi:</b>
+            <Typography variant="subtitle2">
+              <b>Eklenme Tarihi: </b>{this.isoToNormalDate(this.props.object.createdAt)}  
             </Typography>
           </CardContent>
           <CardActions>
