@@ -53,48 +53,40 @@ const styles = theme => ({
   }
 });
 
-
-
 class Album extends Component {
   constructor(props) {
     super(props);
     this.state = {
       words: [],
-      err: "",
-      loading:true
+      err: ""
     };
-    this.getWordData = this.getWordData.bind(this);
   }
-  componentDidMount(){
+  componentDidMount() {
     this.getWordData();
   }
   getWordData = () => {
-    axios.get("http://localhost:3001/words").then(res => {
-      this.setState({
-        words: res.data,
-        err: ""
-      });
-    }).then( ()=> {
-      this.setState({
-        loading:false
+    axios
+      .get("/words")
+      .then(res => {
+        this.setState({
+          words: res.data,
+          err: ""
+        });
       })
-    }).catch(res => {
-      if(!res.response){
-        this.setState({
-          loading:true,
-          err:res
-        })
-      }
-      else{
-        this.setState({
-          loading:false,
-          err:res
-        })
-      }
-    });
+      .catch(res => {
+        if (!res.response) {
+          this.setState({
+            err: res
+          });
+        } else {
+          this.setState({
+            err: res
+          });
+        }
+      });
   };
   render() {
-    const cards = this.state.words;
+    const cards = [...this.state.words];
     const { classes } = this.props;
     return (
       <React.Fragment>
@@ -106,7 +98,7 @@ class Album extends Component {
             <Grid container spacing={40}>
               {cards.map(card => (
                 <Grid item key={card} sm={6} md={4} lg={3}>
-                  <Card object={card}  classes={classes} />
+                  <Card object={card} classes={classes} />
                 </Grid>
               ))}
             </Grid>

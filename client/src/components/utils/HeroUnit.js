@@ -9,9 +9,8 @@ const HeroUnit = (props) => {
              Kelimelerim
             </Typography>
             <Typography variant="h6" align="center" color="textSecondary" paragraph>
-              Hazır mısın ? Süresi biten kelime için test butonuna basarak kelimeyi öğrenip öğrenmediğini kontrol et
+              Sisteme eklediğin kelimeleri düzenleyebilir veya silebilirsin :)
             </Typography>
-            
           </div>
         </div>
     )

@@ -50,7 +50,7 @@ class ShowCase extends Component {
     });
   };
   postRequest = () => {
-    const url = "http://localhost:3001/words";
+    const url = "/words";
     axios
       .post(url, {
         word: this.state.word,
