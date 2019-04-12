@@ -11,7 +11,9 @@ import Toastify from "toastify-js";
 class CardComponent extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      id: this.props.object._id
+    };
   }
 
   IsoToNormalDate = newDate => {
@@ -44,6 +46,7 @@ class CardComponent extends Component {
             duration: 4000,
             gravity: "bottom"
           }).showToast();
+          this.props.getData();
         }
       })
       .catch(err => {
@@ -83,7 +86,7 @@ class CardComponent extends Component {
               Düzenle
             </Button>
             <Button
-              onClick={() => this.handleDelete(this.props.object._id)}
+              onClick={() => this.handleDelete(this.state.id)}
               variant="outlined"
               size="small"
               color="secondary"
