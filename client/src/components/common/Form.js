@@ -18,6 +18,7 @@ export default class FormDialog extends React.Component {
           Kelime Bilgilerini Giriniz
         </DialogTitle>
         <DialogContent>
+          <form>
           <TextField
             autoComplete="off"
             name="word"
@@ -29,6 +30,7 @@ export default class FormDialog extends React.Component {
             value={this.props.input}
             fullWidth
             required
+            variant="outlined"
           />
           <TextField
             autoComplete="off"
@@ -40,6 +42,7 @@ export default class FormDialog extends React.Component {
             onChange={this.props.onInput}
             fullWidth
             required
+            variant="outlined"
           />
           <TextField
             autoComplete="off"
@@ -51,6 +54,7 @@ export default class FormDialog extends React.Component {
             onChange={this.props.onInput}
             fullWidth
             required
+            variant="outlined"
           />
           <TextField
             autoComplete="off"
@@ -62,7 +66,9 @@ export default class FormDialog extends React.Component {
             onChange={this.props.onInput}
             fullWidth
             required
+            variant="outlined"
           />
+          </form>
         </DialogContent>
         <DialogActions>
           <Button variant="outlined" onClick={this.props.close} color="primary">

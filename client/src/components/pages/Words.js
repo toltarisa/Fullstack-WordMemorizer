@@ -93,20 +93,36 @@ class Album extends Component {
         <CssBaseline />
         <Navbar className={classes.appBar} />
         <main>
-          <HeroUnit classes={classes} />
-          <div className={classNames(classes.layout, classes.cardGrid)}>
-            <Grid container spacing={40}>
-              {cards.map(card => (
-                <Grid item key={card} sm={6} md={4} lg={3}>
-                  <Card
-                    getData={this.getWordData}
-                    object={card}
-                    classes={classes}
-                  />
+          {this.state.words.length === 0 ? (
+            <div
+              style={{
+                display: "flex",
+                color: "red",
+                justifyContent: "center",
+                alignItems: "center",
+                fontSize: "2rem"
+              }}
+            >
+              Kelimeniz Bulunmuyor.Lütfen Kelime Ekleyin
+            </div>
+          ) : (
+            <div>
+              <HeroUnit classes={classes} />
+              <div className={classNames(classes.layout, classes.cardGrid)}>
+                <Grid container spacing={40}>
+                  {cards.map(card => (
+                    <Grid item key={card} sm={6} md={4} lg={3}>
+                      <Card
+                        getData={this.getWordData}
+                        object={card}
+                        classes={classes}
+                      />
+                    </Grid>
+                  ))}
                 </Grid>
-              ))}
-            </Grid>
-          </div>
+              </div>
+            </div>
+          )}
         </main>
       </React.Fragment>
     );

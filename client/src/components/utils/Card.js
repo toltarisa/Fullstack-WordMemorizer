@@ -12,7 +12,7 @@ class CardComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: this.props.object._id
+      id: this.props.object._id.slice()
     };
   }
 
@@ -40,8 +40,8 @@ class CardComponent extends Component {
       .then(res => {
         if (res.status === 200) {
           Toastify({
-            text: "Kelime Silindi",
-            background: "linear-gradient(to right, #c21500, #ffc500)",
+            text: "Kelimeniz Silindi",
+            backgroundColor: "linear-gradient(to right, #eb3349, #f45c43)",
             positionLeft: true,
             duration: 4000,
             gravity: "bottom"
@@ -78,7 +78,7 @@ class CardComponent extends Component {
             </Typography>
             <Typography variant="subtitle2">
               <b>Eklenme Tarihi: </b>
-              {this.IsoToNormalDate(this.props.object.createdAt)}
+              {this.IsoToNormalDate(this.props.object.createdAt.slice())}
             </Typography>
           </CardContent>
           <CardActions>
