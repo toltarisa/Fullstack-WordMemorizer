@@ -7,12 +7,14 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import axios from "axios";
 import Toastify from "toastify-js";
+import Form from '../common/Form';
 
 class CardComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: this.props.object._id.slice()
+      id: this.props.object._id.slice(),
+      open:true
     };
   }
 
@@ -54,9 +56,24 @@ class CardComponent extends Component {
       });
   };
 
+  openDialog = () => {
+    this.setState({
+      open:!this.state.open
+    });
+  }
+
+  // handleUpdate = (id) => {
+  //   axios.put(`http://localhost:3001/words/update/${id}`)
+  //       .then(res => {
+
+  //       })
+  // }
+
   render() {
+    //console.log(this.props.open);
     return (
       <div>
+        <Form openDialog={this.openDialog}/>
         <Card className={this.props.classes.card}>
           <CardMedia
             className={this.props.classes.cardMedia}
@@ -82,7 +99,7 @@ class CardComponent extends Component {
             </Typography>
           </CardContent>
           <CardActions>
-            <Button variant="outlined" size="small" color="secondary">
+            <Button onClick={this.openDialog} variant="outlined" size="small" color="secondary">
               Düzenle
             </Button>
             <Button

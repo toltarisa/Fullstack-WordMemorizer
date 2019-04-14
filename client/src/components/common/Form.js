@@ -8,10 +8,11 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 
 export default class FormDialog extends React.Component {
   render() {
+    console.log(this.props);
     return (
       <Dialog
         open={this.props.open}
-        onClose={this.openDialog}
+        onClose={this.props.openDialog}
         aria-labelledby="form-dialog-title"
       >
         <DialogTitle id="form-dialog-title">
