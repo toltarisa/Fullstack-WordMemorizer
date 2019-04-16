@@ -14,7 +14,7 @@ class CardComponent extends Component {
     super(props);
     this.state = {
       id: this.props.object._id.slice(),
-      open:true
+      open:false
     };
   }
 
@@ -60,6 +60,7 @@ class CardComponent extends Component {
     this.setState({
       open:!this.state.open
     });
+    console.log('....');
   }
 
   // handleUpdate = (id) => {
@@ -70,10 +71,9 @@ class CardComponent extends Component {
   // }
 
   render() {
-    //console.log(this.props.open);
     return (
       <div>
-        <Form openDialog={this.openDialog}/>
+        <Form close={this.openDialog} open={this.state.open} openDialog={this.openDialog}/>
         <Card className={this.props.classes.card}>
           <CardMedia
             className={this.props.classes.cardMedia}

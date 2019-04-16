@@ -76,7 +76,7 @@ class ShowCase extends Component {
             example: null
           });
         }
-        console.log(res);
+        //console.log(res);
       })
       .catch(err => {
         throw err;

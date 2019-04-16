@@ -28,7 +28,6 @@ export default class FormDialog extends React.Component {
             label="İngilizce Kelimeyi Girin"
             type="text"
             onChange={this.props.onInput}
-            value={this.props.input}
             fullWidth
             required
             variant="outlined"
