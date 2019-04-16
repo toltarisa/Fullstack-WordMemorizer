@@ -13,9 +13,10 @@ class CardComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: this.props.object._id.slice(),
+      id: this.props.object._id,
       open:false
     };
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
   IsoToNormalDate = newDate => {
@@ -38,7 +39,7 @@ class CardComponent extends Component {
   }
   handleDelete = id => {
     axios
-      .delete(`http://localhost:3001/words/delete/${id}`)
+      .delete(`/words/delete/${id}`)
       .then(res => {
         if (res.status === 200) {
           Toastify({
@@ -60,7 +61,6 @@ class CardComponent extends Component {
     this.setState({
       open:!this.state.open
     });
-    console.log('....');
   }
 
   // handleUpdate = (id) => {

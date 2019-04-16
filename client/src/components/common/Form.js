@@ -8,7 +8,6 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 
 export default class FormDialog extends React.Component {
   render() {
-    console.log(this.props);
     return (
       <Dialog
         open={this.props.open}

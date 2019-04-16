@@ -50,7 +50,7 @@ router.put('/update/:id', (req,res)=> {
 });
 
 //delete a word
-router.delete('/delete/:id',async (req,res)=> {
+router.delete('/delete/:id', async (req,res)=> {
     let query = {_id : req.params.id};
     
     try {
