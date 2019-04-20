@@ -84,6 +84,7 @@ class ShowCase extends Component {
   };
 
   render() {
+    const {word, translate, kind, example} = this.state;
     const { classes } = this.props;
     return (
       <div>
@@ -115,6 +116,7 @@ class ShowCase extends Component {
                     onInput={this.handleInput}
                     open={this.state.open}
                     close={this.openDialog}
+                    data={{word, translate, kind, example}}
                   />
                   <Fab
                     onClick={this.openDialog}

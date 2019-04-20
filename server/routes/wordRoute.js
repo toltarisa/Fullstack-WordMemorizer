@@ -39,14 +39,15 @@ router.get('/:id',async (req,res) =>{
 
 //update a word
 router.put('/update/:id', (req,res)=> {
-    let query = {_id: req.params.id};
-    Word.findByIdAndUpdate(query, req.body)
+    //let query = {_id: req.params.id};
+    Word.findByIdAndUpdate(req.params.id)
         .then(data => {
             res.json(data);
         })
         .catch(err => {
             res.json(err);
         })
+    
 });
 
 //delete a word

@@ -26,8 +26,8 @@ export default class FormDialog extends React.Component {
             id="word"
             label="İngilizce Kelimeyi Girin"
             type="text"
-            defaultValue={this.props.data.word}
             onChange={this.props.onInput}
+            defaultValue={this.props.data.word}
             fullWidth
             required
             variant="outlined"
@@ -82,7 +82,7 @@ export default class FormDialog extends React.Component {
             onClick={this.props.onRequest}
             color="primary"
           >
-            Kelimeyi Ekle
+            Kelimeyi Ekle/Güncelle
           </Button>
         </DialogActions>
       </Dialog>

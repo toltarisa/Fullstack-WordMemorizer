@@ -87,7 +87,7 @@ class Album extends Component {
   };
 
   render() {
-    const cards = [...this.state.words];
+    const cards = this.state.words
     const { classes } = this.props;
     return (
       <React.Fragment>
