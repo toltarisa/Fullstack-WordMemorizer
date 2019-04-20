@@ -26,6 +26,7 @@ export default class FormDialog extends React.Component {
             id="word"
             label="İngilizce Kelimeyi Girin"
             type="text"
+            defaultValue={this.props.data.word}
             onChange={this.props.onInput}
             fullWidth
             required
@@ -38,6 +39,7 @@ export default class FormDialog extends React.Component {
             id="translate"
             label="Kelimenin Cevirisini Girin"
             type="text"
+            defaultValue={this.props.data.translate}
             onChange={this.props.onInput}
             fullWidth
             required
@@ -50,6 +52,7 @@ export default class FormDialog extends React.Component {
             id="tur"
             label="Kelimenin Türünü Girin"
             type="text"
+            defaultValue={this.props.data.kind}
             onChange={this.props.onInput}
             fullWidth
             required
@@ -62,6 +65,7 @@ export default class FormDialog extends React.Component {
             id="ornekCumle"
             label="Ornek Cumle Girin"
             type="text"
+            defaultValue={this.props.data.exampleSentence}
             onChange={this.props.onInput}
             fullWidth
             required

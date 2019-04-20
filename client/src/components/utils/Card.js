@@ -13,13 +13,14 @@ import { IsoToNormalDate } from "./dateUtil";
 class CardComponent extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       id: this.props.object._id,
       open: false,
       word: "",
       translate: "",
       kind: "",
-      example: "" 
+      example: ""
     };
     this.handleDelete = this.handleDelete.bind(this);
   }
@@ -53,15 +54,41 @@ class CardComponent extends Component {
     });
   };
 
-  handleInput = (e) => {
+  handleInput = e => {
     this.setState({
       [e.target.name]: e.target.value
     });
-    console.log(this.state.word)
-  }
+  };
 
   handleUpdate = id => {
-    axios.put(`http://localhost:3001/words/update/${id}`).then(res => {});
+    const obj = {
+      word: this.state.word,
+      translate: this.state.translate,
+      kind: this.state.kind,
+      exampleSentence: this.state.example
+    };
+    axios.put(`http://localhost:3001/words/update/${id}`, obj).then(res => {
+      if (res.status === 200) {
+        Toastify({
+          text: "Kelimeniz Başarıyla Güncellendi",
+          backgroundColor: "linear-gradient(to right, #ffb347, #ffcc33)",
+          positionLeft: true,
+          duration: 4000,
+          gravity: "bottom"
+        }).showToast();
+        this.props.getData();
+      } else {
+        this.setState({
+          word: "",
+          translate: "",
+          kind: "",
+          example: ""
+        });
+      }
+    })
+    .catch(err => {
+      console.log(err);
+    })
   };
 
   render() {
@@ -72,6 +99,8 @@ class CardComponent extends Component {
           open={this.state.open}
           openDialog={this.openDialog}
           onInput={this.handleInput}
+          data={this.props.object}
+          onRequest={this.handleUpdate}
         />
         <Card className={this.props.classes.card}>
           <CardMedia
