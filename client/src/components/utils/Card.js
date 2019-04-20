@@ -7,39 +7,29 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import axios from "axios";
 import Toastify from "toastify-js";
-import Form from '../common/Form';
+import Form from "../common/Form";
+import { IsoToNormalDate } from "./dateUtil";
 
 class CardComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
       id: this.props.object._id,
-      open:false
+      open: false,
+      word: "",
+      translate: "",
+      kind: "",
+      example: "" 
     };
     this.handleDelete = this.handleDelete.bind(this);
   }
 
-  IsoToNormalDate = newDate => {
-    let date = new Date(newDate);
-    let year = date.getFullYear();
-    let month = date.getMonth() + 1;
-    let dt = date.getDate();
-
-    if (dt < 10) {
-      dt = "0" + dt;
-    }
-    if (month < 10) {
-      month = "0" + month;
-    }
-
-    return dt + "-" + month + "-" + year;
-  };
   componentDidMount() {
     this.handleDelete();
   }
   handleDelete = id => {
     axios
-      .delete(`/words/delete/${id}`)
+      .delete(`http://localhost:3001/words/delete/${id}`)
       .then(res => {
         if (res.status === 200) {
           Toastify({
@@ -53,27 +43,36 @@ class CardComponent extends Component {
         }
       })
       .catch(err => {
-        throw err;
+        console.log(err.response);
       });
   };
 
   openDialog = () => {
     this.setState({
-      open:!this.state.open
+      open: !this.state.open
     });
+  };
+
+  handleInput = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value
+    });
+    console.log(this.state.word)
   }
 
-  // handleUpdate = (id) => {
-  //   axios.put(`http://localhost:3001/words/update/${id}`)
-  //       .then(res => {
-
-  //       })
-  // }
+  handleUpdate = id => {
+    axios.put(`http://localhost:3001/words/update/${id}`).then(res => {});
+  };
 
   render() {
     return (
       <div>
-        <Form close={this.openDialog} open={this.state.open} openDialog={this.openDialog}/>
+        <Form
+          close={this.openDialog}
+          open={this.state.open}
+          openDialog={this.openDialog}
+          onInput={this.handleInput}
+        />
         <Card className={this.props.classes.card}>
           <CardMedia
             className={this.props.classes.cardMedia}
@@ -95,11 +94,16 @@ class CardComponent extends Component {
             </Typography>
             <Typography variant="subtitle2">
               <b>Eklenme Tarihi: </b>
-              {this.IsoToNormalDate(this.props.object.createdAt.slice())}
+              {IsoToNormalDate(this.props.object.createdAt.slice())}
             </Typography>
           </CardContent>
           <CardActions>
-            <Button onClick={this.openDialog} variant="outlined" size="small" color="secondary">
+            <Button
+              onClick={this.openDialog}
+              variant="outlined"
+              size="small"
+              color="secondary"
+            >
               Düzenle
             </Button>
             <Button
