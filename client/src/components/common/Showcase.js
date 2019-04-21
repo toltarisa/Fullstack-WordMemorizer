@@ -68,15 +68,13 @@ class ShowCase extends Component {
             gravity: "bottom"
           }).showToast();
           this.openDialog();
-        } else {
           this.setState({
-            word: null,
-            translate: null,
-            kind: null,
-            example: null
+            word: "",
+            translate: "",
+            kind: "",
+            example: ""
           });
         }
-        //console.log(res);
       })
       .catch(err => {
         throw err;
@@ -84,7 +82,7 @@ class ShowCase extends Component {
   };
 
   render() {
-    const {word, translate, kind, example} = this.state;
+    const { word, translate, kind, example } = this.state;
     const { classes } = this.props;
     return (
       <div>
@@ -116,7 +114,7 @@ class ShowCase extends Component {
                     onInput={this.handleInput}
                     open={this.state.open}
                     close={this.openDialog}
-                    data={{word, translate, kind, example}}
+                    data={{ word, translate, kind, example }}
                   />
                   <Fab
                     onClick={this.openDialog}

@@ -17,10 +17,10 @@ class CardComponent extends Component {
     this.state = {
       id: this.props.object._id,
       open: false,
-      word: "",
-      translate: "",
-      kind: "",
-      example: ""
+      word: this.props.object.word,
+      translate: this.props.object.translate,
+      kind: this.props.object.kind,
+      example: this.props.object.exampleSentence
     };
     this.handleDelete = this.handleDelete.bind(this);
     this.handleUpdate = this.handleUpdate.bind(this);
@@ -59,11 +59,10 @@ class CardComponent extends Component {
     this.setState({
       [e.target.name]: e.target.value
     });
-    
   };
 
-  handleUpdate = id => {
-    this.id = this.props.object._id; 
+  handleUpdate = () => {
+    let id = this.props.object._id;
     let obj = {
       word: this.state.word,
       translate: this.state.translate,
@@ -71,25 +70,27 @@ class CardComponent extends Component {
       exampleSentence: this.state.example
     };
 
-    axios.put(`http://localhost:3001/words/update/${this.id}`,obj).then(res => {
-      if (res.status === 200) {
-        Toastify({
-          text: "Kelimeniz Başarıyla Güncellendi",
-          backgroundColor: "linear-gradient(to right, #ffb347, #ffcc33)",
-          positionLeft: true,
-          duration: 4000,
-          gravity: "bottom"
-        }).showToast();
-      }
-      this.props.getData();
-    })
-    .catch(err => {
-      console.log(err);
-    })
+    axios
+      .put(`http://localhost:3001/words/update/${id}`, obj)
+      .then(res => {
+        if (res.status === 200) {
+          Toastify({
+            text: "Kelimeniz Başarıyla Güncellendi",
+            backgroundColor: "linear-gradient(to right, #ffb347, #ffcc33)",
+            positionLeft: true,
+            duration: 4000,
+            gravity: "bottom"
+          }).showToast();
+          this.props.getData();
+        }
+        this.openDialog();
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
 
   render() {
-    
     return (
       <div>
         <Form
