@@ -23,6 +23,7 @@ class CardComponent extends Component {
       example: ""
     };
     this.handleDelete = this.handleDelete.bind(this);
+    this.handleUpdate = this.handleUpdate.bind(this);
   }
 
   componentDidMount() {
@@ -62,14 +63,15 @@ class CardComponent extends Component {
   };
 
   handleUpdate = id => {
-    // const obj = {
-    //   word: this.state.word,
-    //   translate: this.state.translate,
-    //   kind: this.state.kind,
-    //   exampleSentence: this.state.example
-    // };
+    this.id = this.props.object._id; 
+    let obj = {
+      word: this.state.word,
+      translate: this.state.translate,
+      kind: this.state.kind,
+      exampleSentence: this.state.example
+    };
 
-    axios.put(`http://localhost:3001/words/update/${id}`).then(res => {
+    axios.put(`http://localhost:3001/words/update/${this.id}`,obj).then(res => {
       if (res.status === 200) {
         Toastify({
           text: "Kelimeniz Başarıyla Güncellendi",
@@ -78,8 +80,8 @@ class CardComponent extends Component {
           duration: 4000,
           gravity: "bottom"
         }).showToast();
-        this.props.getData();
       }
+      this.props.getData();
     })
     .catch(err => {
       console.log(err);
@@ -87,7 +89,7 @@ class CardComponent extends Component {
   };
 
   render() {
-    //console.log(this.props.object);
+    
     return (
       <div>
         <Form
