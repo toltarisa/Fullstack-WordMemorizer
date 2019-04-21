@@ -8,7 +8,6 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 
 export default class FormDialog extends React.Component {
   render() {
-    
     return (
       <Dialog
         open={this.props.open}
@@ -30,8 +29,11 @@ export default class FormDialog extends React.Component {
             onChange={this.props.onInput}
             defaultValue={this.props.data.word}
             fullWidth
-            required
+            required={true}
             variant="outlined"
+            error={this.props.text === false}
+            helperText={!this.props.text ? 'Boş Alan!' : ' '}
+            
           />
           <TextField
             autoComplete="off"
@@ -43,8 +45,10 @@ export default class FormDialog extends React.Component {
             defaultValue={this.props.data.translate}
             onChange={this.props.onInput}
             fullWidth
-            required
+            required={true}
             variant="outlined"
+            error={this.props.text === false}
+            helperText={!this.props.text ? 'Boş Alan!' : ' '}
           />
           <TextField
             autoComplete="off"
@@ -53,11 +57,13 @@ export default class FormDialog extends React.Component {
             id="tur"
             label="Kelimenin Türünü Girin"
             type="text"
-            defaultValue={this.props.data.kind}
+            defaultValue={this.props.text.kind}
             onChange={this.props.onInput}
             fullWidth
-            required
+            required={true}
             variant="outlined"
+            error={this.props.text === false}
+            helperText={!this.props.text ? 'Boş Alan!' : ' '}
           />
           <TextField
             autoComplete="off"
@@ -69,8 +75,10 @@ export default class FormDialog extends React.Component {
             defaultValue={this.props.data.exampleSentence}
             onChange={this.props.onInput}
             fullWidth
-            required
+            required={true}
             variant="outlined"
+            error={this.props.text === false}
+            helperText={!this.props.text ? 'Boş Alan!' : ' '}
           />
           </form>
         </DialogContent>
@@ -82,6 +90,7 @@ export default class FormDialog extends React.Component {
             variant="outlined"
             onClick={this.props.onRequest}
             color="primary"
+            disabled={!this.props.text}
           >
             Kelimeyi Ekle/Güncelle
           </Button>

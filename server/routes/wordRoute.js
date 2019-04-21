@@ -4,8 +4,15 @@ const Word = require("../models/Word");
 
 // add a word
 router.post("/", async (req, res) => {
+  // const {word, translate, kind, exampleSentence} = req.body;
+  // let errors = [];
   let newWord = new Word(req.body);
-
+  // if(!word || !translate || !kind || !exampleSentence){
+  //   errors.push({text : 'Lutfen Boslugu doldurun !'});
+  // }
+  // if(errors.length > 0){
+    
+  // }
   try {
     await newWord.save();
     res.status(201).send({ response: "Object Created" });
