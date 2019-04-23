@@ -111,8 +111,8 @@ class Album extends Component {
               <HeroUnit classes={classes} />
               <div className={classNames(classes.layout, classes.cardGrid)}>
                 <Grid container spacing={40}>
-                  {cards.map(card => (
-                    <Grid item key={card} sm={6} md={4} lg={3}>
+                  {cards.map((card,index) => (
+                    <Grid item key={index} sm={6} md={4} lg={3}>
                       <Card
                         getData={this.getWordData}
                         object={card}

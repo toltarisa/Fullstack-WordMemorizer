@@ -31,8 +31,6 @@ export default class FormDialog extends React.Component {
             fullWidth
             required={true}
             variant="outlined"
-            error={this.props.text === false}
-            helperText={!this.props.text ? 'Boş Alan!' : ' '}
             
           />
           <TextField
@@ -47,8 +45,6 @@ export default class FormDialog extends React.Component {
             fullWidth
             required={true}
             variant="outlined"
-            error={this.props.text === false}
-            helperText={!this.props.text ? 'Boş Alan!' : ' '}
           />
           <TextField
             autoComplete="off"
@@ -57,13 +53,11 @@ export default class FormDialog extends React.Component {
             id="tur"
             label="Kelimenin Türünü Girin"
             type="text"
-            defaultValue={this.props.text.kind}
+            defaultValue={this.props.data.kind}
             onChange={this.props.onInput}
             fullWidth
             required={true}
             variant="outlined"
-            error={this.props.text === false}
-            helperText={!this.props.text ? 'Boş Alan!' : ' '}
           />
           <TextField
             autoComplete="off"
@@ -77,8 +71,6 @@ export default class FormDialog extends React.Component {
             fullWidth
             required={true}
             variant="outlined"
-            error={this.props.text === false}
-            helperText={!this.props.text ? 'Boş Alan!' : ' '}
           />
           </form>
         </DialogContent>
@@ -90,7 +82,6 @@ export default class FormDialog extends React.Component {
             variant="outlined"
             onClick={this.props.onRequest}
             color="primary"
-            disabled={!this.props.text}
           >
             Kelimeyi Ekle/Güncelle
           </Button>

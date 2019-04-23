@@ -22,14 +22,14 @@ class CardComponent extends Component {
       kind: this.props.object.kind,
       example: this.props.object.exampleSentence
     };
-    this.handleDelete = this.handleDelete.bind(this);
+    
     this.handleUpdate = this.handleUpdate.bind(this);
   }
 
   componentDidMount() {
     this.handleDelete();
   }
-  handleDelete = id => {
+  handleDelete = (id) => {
     axios
       .delete(`http://localhost:3001/words/delete/${id}`)
       .then(res => {
@@ -45,7 +45,7 @@ class CardComponent extends Component {
         }
       })
       .catch(err => {
-        console.log(err.response);
+        console.log(err.message);
       });
   };
 
@@ -135,7 +135,7 @@ class CardComponent extends Component {
               Düzenle
             </Button>
             <Button
-              onClick={() => this.handleDelete(this.state.id)}
+              onClick={() => this.handleDelete(this.props.object._id)}
               variant="outlined"
               size="small"
               color="secondary"

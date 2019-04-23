@@ -37,7 +37,6 @@ class ShowCase extends Component {
       translate: "",
       kind: "",
       example: "",
-      text:false
     };
     this.postRequest = this.postRequest.bind(this);
     this.handleInput = this.handleInput.bind(this);
@@ -46,17 +45,9 @@ class ShowCase extends Component {
     this.setState({ open: !this.state.open });
   };
   handleInput = e => {
-    
-    if(e.target.value){
-      this.setState({
-        [e.target.name]: e.target.value,
-        text:true
-      });
-    }else{
-      this.setState({
-        text:false
-      })
-    }
+    this.setState({
+      [e.target.name]: e.target.value
+    });
   };
   postRequest = () => {
     const url = "/words";
@@ -84,6 +75,7 @@ class ShowCase extends Component {
             example: ""
           });
         }
+        
       })
       .catch(err => {
         throw err;
@@ -124,7 +116,6 @@ class ShowCase extends Component {
                     open={this.state.open}
                     close={this.openDialog}
                     data={{ word, translate, kind, example }}
-                    text={this.state.text}
                   />
                   <Fab
                     onClick={this.openDialog}
