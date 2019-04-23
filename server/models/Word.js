@@ -14,10 +14,6 @@ const WordSchema = new Schema({
     exampleSentence: {
         type:String,     
     },
-    createdAt: {
-        type:Date,
-        default:Date.now()
-    },
     isCorrect: {
         type:Boolean
     }
