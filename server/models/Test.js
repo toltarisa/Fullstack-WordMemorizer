@@ -4,6 +4,9 @@ const Schema = mongoose.Schema;
 
 
 const TestSchema = new Schema({
+    status: {
+        type:Schema.Types.ObjectId
+    },
     createdAt: {
         type:Date,
         default:Date.now()
