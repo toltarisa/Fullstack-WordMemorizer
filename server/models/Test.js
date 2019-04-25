@@ -4,9 +4,6 @@ const Schema = mongoose.Schema;
 
 
 const TestSchema = new Schema({
-    status: {
-        type:Schema.Types.ObjectId
-    },
     createdAt: {
         type:Date,
         default:Date.now()
@@ -27,6 +24,7 @@ const TestSchema = new Schema({
         type:Date,
         default: new Date(+new Date() + 122*24*60*60*1000) // 4 ay sonrası 
     }
+    
 
 });
 

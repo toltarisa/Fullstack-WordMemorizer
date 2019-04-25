@@ -2,9 +2,6 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const WordSchema = new Schema({
-    pointer: {
-        type:Schema.Types.ObjectId
-    },
     word:{
         type:String,
     },
@@ -19,6 +16,10 @@ const WordSchema = new Schema({
     },
     isCorrect: {
         type:Boolean
+    },
+    eventId: {
+        type:Schema.Types.ObjectId,
+        ref: 'Test'
     }
 });
 
