@@ -8,7 +8,7 @@ import Typography from "@material-ui/core/Typography";
 import axios from "axios";
 import Toastify from "toastify-js";
 import Form from "../common/Form";
-import { IsoToNormalDate } from "./dateUtil";
+
 
 class CardComponent extends Component {
   constructor(props) {
@@ -119,10 +119,6 @@ class CardComponent extends Component {
             </Typography>
             <Typography gutterBottom variant="subtitle2">
               <b>Örnek : </b> {this.props.object.exampleSentence}
-            </Typography>
-            <Typography variant="subtitle2">
-              <b>Eklenme Tarihi: </b>
-              {IsoToNormalDate(this.props.object.createdAt.slice())}
             </Typography>
           </CardContent>
           <CardActions>

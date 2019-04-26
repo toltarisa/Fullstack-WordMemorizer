@@ -16,30 +16,25 @@ router.post("/", async (req, res) => {
 })
 
 router.get("/", (req,res) => {
-
-    Word.find({}, (err, words) => {
-        if(err){console.log(err)}
-        const uid = words.map(word=>word._id);
-    
     const promise = Word.aggregate([
-        {
-            $match: {
-              _id: {
-                $in: uid.map(function(id){return new mongoose.Types.ObjectId(id)})
-              }
-            }
-        },
         {
         $lookup:
            {
              from: 'tests',
              localField: 'eventId',
              foreignField: '_id.str',
-             as: 'events'
+             as: 'event'
            }
         },
         {
-            $unwind: '$events'
+            $project : {
+                "word":1,
+                "translate":1,
+                "kind":1,
+                "exampleSentence":1,
+                "event": 1,
+                'event':{ $arrayElemAt:['$event',0] }
+            }
         }
         ]);
         promise.then(data => {
@@ -48,9 +43,5 @@ router.get("/", (req,res) => {
         .catch(err=>{throw err});
 
     });
-    // const data = await Word.find().populate({path:'event',Model:'Test'}).exec();
-    // res.json(data);
-
-})
 
 module.exports = router;
