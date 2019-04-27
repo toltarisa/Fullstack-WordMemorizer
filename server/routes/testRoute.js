@@ -35,14 +35,14 @@ router.get("/:id", (req, res) => {
           from: "tests",
           localField: "_id.str",
           foreignField: "eventId",
-          as: "events"
+          as: "event"
         }
       },
       {
         $addFields: {
-          events: {
+          event: {
             $filter: {
-              input: "$events",
+              input: "$event",
               as: "event",
               cond: {
                 $eq: ["$$event._id", mongoose.Types.ObjectId(req.params.id)]
@@ -50,6 +50,9 @@ router.get("/:id", (req, res) => {
             }
           }
         }
+      },
+      {
+        $unwind:'$event'
       }
     ])
       .then(data => {
