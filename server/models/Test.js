@@ -23,8 +23,11 @@ const TestSchema = new Schema({
     FourMonthLater: {
         type:Date,
         default: new Date(+new Date() + 122*24*60*60*1000) // 4 ay sonrası 
+    },
+    eventId : {
+        type:mongoose.Types.ObjectId,
+        ref: 'Word'
     }
-    
 
 });
 

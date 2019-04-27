@@ -16,10 +16,6 @@ const WordSchema = new Schema({
     },
     isCorrect: {
         type:Boolean
-    },
-    eventId: {
-        type:mongoose.Types.ObjectId,
-        ref: 'Test'
     }
 });
 
