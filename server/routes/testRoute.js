@@ -6,7 +6,6 @@ const mongoose = require("mongoose");
 
 router.post("/:id", async (req, res) => {
   let newTest = new Test({ _id: req.params.id });
-
   try {
     await newTest.save();
     res.status(200).send({ message: "dates setted" });
@@ -21,13 +20,12 @@ router.get("/:id", (req, res) => {
       console.log(err);
     }
     const uid = words.map(word => word._id);
-    console.log(req.params.id);
     Word.aggregate([
       {
         $match: {
           _id: {
             $in: uid.map(function(id) {
-              return new mongoose.Types.ObjectId(id);
+              return mongoose.Types.ObjectId(id);
             })
           }
         }
@@ -35,26 +33,24 @@ router.get("/:id", (req, res) => {
       {
         $lookup: {
           from: "tests",
-          localField: "eventId",
-          foreignField: "_id.str",
+          localField: "_id.str",
+          foreignField: "eventId",
           as: "events"
         }
       },
-    //   {
-    //     $project: {
-    //       "word": 1,
-    //       "translate": 1,
-    //       "kind": 1,
-    //       "exampleSentence": 1,
-    //       "events": {
-    //         "$filter": {
-    //           "input": "$events",
-    //           "as": "event",
-    //           "cond": { $eq: ["$$event._id", req.params.id] }
-    //         }
-    //       }
-    //     }
-    //   }
+      {
+        $addFields: {
+          events: {
+            $filter: {
+              input: "$events",
+              as: "event",
+              cond: {
+                $eq: ["$$event._id", mongoose.Types.ObjectId(req.params.id)]
+              }
+            }
+          }
+        }
+      }
     ])
       .then(data => {
         res.json(data);
