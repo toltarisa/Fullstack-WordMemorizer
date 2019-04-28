@@ -15,7 +15,8 @@ const WordSchema = new Schema({
         type:String,     
     },
     isCorrect: {
-        type:Boolean
+        type:Boolean,
+        default:false
     }
 });
 

@@ -14,8 +14,8 @@ router.post("/:id", async (req, res) => {
   }
 });
 
-router.get("/:id", (req, res) => {
-  Word.find({ _id: req.params.id }, (err, words) => {
+router.get("/", (req, res) => {
+  Word.find({}, (err, words) => {
     if (err) {
       console.log(err);
     }
@@ -45,14 +45,14 @@ router.get("/:id", (req, res) => {
               input: "$event",
               as: "event",
               cond: {
-                $eq: ["$$event._id", mongoose.Types.ObjectId(req.params.id)]
+                $eq: ["$$event._id", "$_id"]
               }
             }
           }
         }
       },
       {
-        $unwind:'$event'
+        $unwind: "$event"
       }
     ])
       .then(data => {

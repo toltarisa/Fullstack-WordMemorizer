@@ -10,7 +10,7 @@ const TestSchema = new Schema({
     },
     TenMinutesLater: {
         type:Date,
-        default: new Date(+new Date() + 10*1000) // createdAt set edildiginde bu obje 10 dakika sonrasına set edilir
+        default: new Date(+new Date() + 10*60*1000) // createdAt set edildiginde bu obje 10 dakika sonrasına set edilir
     },
     OneWeekLater: {
         type:Date,
