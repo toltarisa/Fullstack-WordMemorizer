@@ -37,7 +37,7 @@ const Navbar = props => {
             <Button href="/words" className={classes.btn} color="inherit">
               Kelimelerim
             </Button>
-            <Button href="/start" color="inherit">
+            <Button href="/test" color="inherit">
               Test Et
             </Button>
           </Toolbar>
