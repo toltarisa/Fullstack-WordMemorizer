@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
+import Question from './Question';
+import Answer from './Answer';
 class Quiz extends Component {
     render() { 
+        
         return ( 
-        <div>
-            
-        </div> );
+        <div className="container">
+            <Question data={this.props} />
+            <Answer />
+        </div> 
+        
+        );
     }
 }
  
