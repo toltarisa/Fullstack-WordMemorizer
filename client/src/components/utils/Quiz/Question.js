@@ -1,11 +1,10 @@
-import React from 'react';
+import React from "react";
 
 const Question = props => {
-    console.log(props);
-
-    return (
-        <h2 className="question">{ props.data.data.word }'nin Türkçesi Nedir ?</h2>
-    );
-}
+  
+  return (
+    <h2 className="question">{props.question} kelimesinin Türkçesi Nedir ?</h2>
+  );
+};
 
 export default Question;

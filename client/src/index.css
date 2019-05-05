@@ -9,21 +9,57 @@ code {
 }
 .container {
   position: relative;
-  max-width: 800px;
+  max-width: 600px;
   margin: 0 auto;
   background: #eee;
   border-radius: 3px;
-  padding:0px 15px;
+  padding:20px 20px;
+  margin-top:30px;
+  box-shadow: 5px 5px 10px;
+  
+}
+.question{
+  font-family: 'Maven+Pro';
+}
+.answerOption{
+  margin: 10px 10px;
+  padding: 0;
+  list-style: none;
 }
 
-input[type=text] {
-  
-    width: 50%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-  
+.radioCustomLabel{
+  font-size: 24px;
+  font-weight:200;
+}
+
+/* Animation */
+.fade-enter {
+  opacity: 0;
+}
+
+.fade-enter.fade-enter-active {
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out 0.3s;
+}
+
+.fade-leave {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  opacity: 1;
+}
+
+.fade-leave.fade-leave-active {
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.fade-appear {
+  opacity: 0;
+}
+
+.fade-appear.fade-appear-active {
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
 }
