@@ -9,27 +9,39 @@ code {
 }
 .container {
   position: relative;
-  max-width: 600px;
+  max-width: 500px;
+  height:200px;
   margin: 0 auto;
-  background: #eee;
+  background: #ddd;
   border-radius: 3px;
-  padding:20px 20px;
-  margin-top:30px;
-  box-shadow: 5px 5px 10px;
-  
-}
-.question{
-  font-family: 'Maven+Pro';
-}
-.answerOption{
-  margin: 10px 10px;
-  padding: 0;
-  list-style: none;
+  border:1px solid #000;
 }
 
-.radioCustomLabel{
-  font-size: 24px;
-  font-weight:200;
+@media (min-width: 769px) {
+  .container {
+    margin: 2.5rem auto;
+  }
+}
+
+input[type="radio"]{
+  transform: scale(1.5);
+}
+.result {
+  padding: 1.5rem 2.5rem;
+}
+
+.answerOption {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 25px;
+}
+
+/* Question Component */
+.question {
+  margin: 0;
+  padding: 0.5rem 2.5rem 1.5rem 2.5rem;
+  
 }
 
 /* Animation */

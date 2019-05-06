@@ -3,6 +3,7 @@ import Navbar from "../common/Navbar";
 import Quiz from "../utils/Quiz/Quiz";
 import axios from "axios";
 import randomAnswer from "../randomAnswers";
+import Toastify from "toastify-js";
 class TestPage extends Component {
   constructor(props) {
     super(props);
@@ -35,9 +36,9 @@ class TestPage extends Component {
   };
 
   handleAnswerSelected = event => {
-    this.setUserAnswer(event.currentTarget.dataset.id );
+    this.setUserAnswer(event.currentTarget.value);
     if (this.state.questionId < this.state.words.length) {
-      setTimeout(() => this.setNextQuestion(), 300);
+      setTimeout(() => this.setNextQuestion(), 100);
       this.getMeRandomElements(
         randomAnswer,
         3,
@@ -49,6 +50,7 @@ class TestPage extends Component {
   setNextQuestion = () => {
     const counter = this.state.counter + 1;
     const questionId = this.state.questionId + 1;
+    this.checkQuestion();
     this.setState({
       counter: counter,
       questionId: questionId,
@@ -61,6 +63,30 @@ class TestPage extends Component {
     this.setState({
       answer: answer
     });
+  };
+
+  checkQuestion = () => {
+    let data = [...this.state.words];
+    const gonnaCheck = data.map(word => {
+      return word.translate;
+    });
+    if (gonnaCheck.includes(this.state.answer)) {
+      Toastify({
+        text: "Doğru Cevap",
+        backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
+        positionLeft: true,
+        duration: 4000,
+        gravity: "bottom"
+      }).showToast();
+    } else {
+      Toastify({
+        text: "Yanlış Cevap",
+        backgroundColor: "red",
+        positionLeft: true,
+        duration: 4000,
+        gravity: "bottom"
+      }).showToast();
+    }
   };
 
   componentDidMount() {
@@ -76,7 +102,7 @@ class TestPage extends Component {
           words: res.data,
           err: ""
         });
-        const data = [...this.state.words];
+        let data = [...this.state.words];
         this.getMeRandomElements(randomAnswer, 3, data[0].translate);
       })
       .catch(res => {
