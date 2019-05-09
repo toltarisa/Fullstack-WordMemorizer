@@ -5,7 +5,10 @@ const Word = require("../models/Word");
 const mongoose = require("mongoose");
 
 router.post("/:id", async (req, res) => {
-  let newTest = new Test({ _id: req.params.id });
+  let query = {
+    _id: req.params.id,
+  }
+  let newTest = new Test(query);
   try {
     await newTest.save();
     res.status(200).send({ message: "dates setted" });

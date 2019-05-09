@@ -14,21 +14,22 @@ class TestPage extends Component {
       answer: "",
       answers: [],
       words: [],
+      isTrue: false,
+      id: "",
       err: ""
     };
   }
-  getMeRandomElements = (sourceArray, neededElements, third) => {
+  getMeRandomElements = (sourceArray, neededElements, lastElement) => {
     const result = [];
     for (let i = 0; i < neededElements; i++) {
       const index = Math.floor(Math.random() * sourceArray.length);
       result.push(sourceArray[index]);
       sourceArray.splice(index, 1);
     }
-    result.push(third);
-    let j, temp;
+    result.push(lastElement);
     for (let i = result.length - 1; i > 0; i--) {
-      j = Math.floor(Math.random() * (i + 1));
-      temp = result[i];
+      let j = Math.floor(Math.random() * (i + 1));
+      let temp = result[i];
       result[i] = result[j];
       result[j] = temp;
     }
@@ -39,12 +40,12 @@ class TestPage extends Component {
     this.setUserAnswer(event.currentTarget.value);
     if (this.state.questionId < this.state.words.length) {
       setTimeout(() => this.setNextQuestion(), 100);
-      this.getMeRandomElements(
-        randomAnswer,
-        3,
-        this.state.words[this.state.counter].translate
-      );
     }
+    this.getMeRandomElements(
+      randomAnswer,
+      3,
+      this.state.words[this.state.counter].translate
+    );
   };
 
   setNextQuestion = () => {
@@ -54,8 +55,10 @@ class TestPage extends Component {
     this.setState({
       counter: counter,
       questionId: questionId,
+      id: this.state.words[this.state.counter]._id,
       question: this.state.words[this.state.counter].word,
-      answer: ""
+      answer: "",
+      answers:[]
     });
   };
 
@@ -67,17 +70,32 @@ class TestPage extends Component {
 
   checkQuestion = () => {
     let data = [...this.state.words];
-    const gonnaCheck = data.map(word => {
+
+    const getTranslateOfWords = data.map(word => {
       return word.translate;
     });
-    if (gonnaCheck.includes(this.state.answer)) {
-      Toastify({
-        text: "Doğru Cevap",
-        backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
-        positionLeft: true,
-        duration: 4000,
-        gravity: "bottom"
-      }).showToast();
+    if (getTranslateOfWords.includes(this.state.answer)) {
+      this.setState({
+        isTrue: true
+      });
+      let obj = {
+        isCorrect:this.state.isTrue
+      }
+      axios.put(`http://localhost:3001/words/update/${this.state.id}`,obj)
+      .then(res=>console.log(res.status))
+      .catch(err=>{throw err});
+      axios
+        .post(`http://localhost:3001/test/${this.state.id}`)
+        .then(() => {
+          Toastify({
+            text: "Doğru Cevap",
+            backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
+            positionLeft: true,
+            duration: 4000,
+            gravity: "bottom"
+          }).showToast();
+        })
+        .catch(err => {throw err});
     } else {
       Toastify({
         text: "Yanlış Cevap",
@@ -97,13 +115,18 @@ class TestPage extends Component {
     axios
       .get("/words")
       .then(res => {
-        this.setState({
-          question: res.data[0].word,
-          words: res.data,
-          err: ""
+        res.data.map((word,index) =>{
+          if(word.isCorrect === false){
+            this.setState({
+              id: res.data[index]._id,
+              question: res.data[index].word,
+              words: res.data,
+              err: ""
+            });
+            let data = [...this.state.words];
+            this.getMeRandomElements(randomAnswer, 3, data[index].translate);
+          }
         });
-        let data = [...this.state.words];
-        this.getMeRandomElements(randomAnswer, 3, data[0].translate);
       })
       .catch(res => {
         if (!res.response) {
@@ -118,17 +141,32 @@ class TestPage extends Component {
       });
   };
   render() {
-    console.log(this.state.answer);
+    console.log(this.state.answers);
     return (
       <div className="main">
         <Navbar />
-        <Quiz
-          questionId={this.state.questionId}
-          answer={this.state.answer}
-          answerOptions={this.state.answers}
-          question={this.state.question}
-          onAnswerSelected={this.handleAnswerSelected}
-        />
+        {this.state.answers.length === 0 ? (
+          <div
+            style={{
+              textAlign:'center',
+              color: "red",
+              position:'relative',
+              fontSize: "2rem"
+            }}
+          >
+            Tüm soruları dogru cevapladınız.Tekrar Kelime ekleyebilirisin !.
+          </div>
+        ) : (
+          <div>
+            <Quiz
+              questionId={this.state.questionId}
+              answer={this.state.answer}
+              answerOptions={this.state.answers}
+              question={this.state.question}
+              onAnswerSelected={this.handleAnswerSelected}
+            />
+          </div>
+        )}
       </div>
     );
   }
