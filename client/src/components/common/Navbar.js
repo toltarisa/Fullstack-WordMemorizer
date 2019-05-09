@@ -34,9 +34,6 @@ const Navbar = props => {
             <Button href="/" className={classes.btn} color="inherit">
               Ana Sayfa
             </Button>
-            <Button href="/words" className={classes.btn} color="inherit">
-              Kelimelerim
-            </Button>
             <Button href="/test" color="inherit">
               Test Et
             </Button>
