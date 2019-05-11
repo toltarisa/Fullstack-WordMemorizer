@@ -37,6 +37,9 @@ const Navbar = props => {
             <Button href="/test" color="inherit">
               Test Et
             </Button>
+            <Button href="/stats" color="inherit">
+              İSTATİSTİKLER
+            </Button>
           </Toolbar>
         </AppBar>
       </div>

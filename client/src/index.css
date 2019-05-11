@@ -75,3 +75,7 @@ input[type="radio"]{
   opacity: 1;
   transition: opacity 0.5s ease-in-out;
 }
+
+.textChart{
+  text-align: center;
+}

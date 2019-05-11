@@ -4,21 +4,20 @@ import Quiz from "../utils/Quiz/Quiz";
 import axios from "axios";
 import randomAnswer from "../randomAnswers";
 import Toastify from "toastify-js";
-import moment from 'moment';
+import moment from "moment";
 class TestPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
       counter: 1,
-      questionId: 0,
+      questionId: 1,
       question: "",
       answer: "",
       answers: [],
       words: [],
-      isTrue: false,
       id: "",
       err: "",
-      level:0,
+      level: 0
     };
   }
   getMeRandomElements = (sourceArray, neededElements, lastElement) => {
@@ -40,22 +39,27 @@ class TestPage extends Component {
 
   handleAnswerSelected = event => {
     this.setUserAnswer(event.currentTarget.value);
+    console.log(this.state.answer);
+
     if (this.state.questionId < this.state.words.length) {
       setTimeout(() => this.setNextQuestion(), 300);
+      this.getMeRandomElements(
+        randomAnswer,
+        3,
+        this.state.words[this.state.counter].translate
+      );
     }
-    this.getMeRandomElements(randomAnswer,3,this.state.words[this.state.counter].translate);
   };
 
   setNextQuestion = () => {
+    this.checkQuestion();
     let counter = this.state.counter + 1;
     let questionId = this.state.questionId + 1;
-    this.checkQuestion();
     this.setState({
       counter: counter,
       questionId: questionId,
       id: this.state.words[this.state.counter]._id,
-      question: this.state.words[this.state.counter].word,
-      answer: "",
+      question: this.state.words[this.state.counter].word
     });
   };
 
@@ -64,35 +68,37 @@ class TestPage extends Component {
       answer: answer
     });
   };
-  
+
   checkQuestion = () => {
     let data = [...this.state.words];
     const getTranslateOfWords = data.map(word => {
       return word.translate;
     });
     if (getTranslateOfWords.includes(this.state.answer)) {
-      let level = this.state.level + 1;
-      this.setState({
-        level:level,
-      });
       let obj = {
-        date:moment(Date.now()).add(10, 'minutes').format('YYYY-MM-DD hh:mm:ss'),
-        level : this.state.level
-      }
-      axios.put(`http://localhost:3001/words/update/${this.state.id}`,obj)
+        date:
+          moment(Date.now())
+            .add(10, "minutes")
+            .format("YYYY-MM-DDTHH:mm:ss") + "Z",
+        level: 1
+      };
+      axios.put(`http://localhost:3001/words/update/${this.state.id}`, obj);
       Toastify({
         text: "Doğru Cevap",
         backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
         positionLeft: true,
-        duration: 4000,
+        duration: 500,
         gravity: "bottom"
       }).showToast();
+      this.setState({
+        answer: ""
+      });
     } else {
       Toastify({
         text: "Yanlış Cevap",
         backgroundColor: "red",
         positionLeft: true,
-        duration: 4000,
+        duration: 500,
         gravity: "bottom"
       }).showToast();
     }
@@ -102,47 +108,51 @@ class TestPage extends Component {
     this.getWordData();
   }
 
+  renderQuiz = () => {
+    return (
+      <div>
+        <Quiz
+          questionId={this.state.questionId}
+          answer={this.state.answer}
+          answerOptions={this.state.answers}
+          question={this.state.question}
+          onAnswerSelected={this.handleAnswerSelected}
+        />
+      </div>
+    );
+  };
+
   getWordData = () => {
     axios
       .get("/words")
       .then(res => {
-            this.setState({
-              id: res.data[0]._id,
-              question: res.data[0].word,
-              words: res.data,
-              err: "",
-            });
-            let data = [...this.state.words];
-            this.getMeRandomElements(randomAnswer, 3, data[0].translate);
+        this.setState({
+          id: res.data[0]._id,
+          question: res.data[0].word,
+          words: res.data,
+          err: ""
+        });
+        let data = [...this.state.words];
+        this.getMeRandomElements(randomAnswer, 3, data[0].translate);
       })
-      .catch(res => {
-        if (!res.response) {
-          this.setState({err: res});
-        } else {
-          this.setState({err: res});
-        }
+      .catch(err => {
+        this.setState({ err: err });
       });
   };
   render() {
-    
     return (
       <div className="main">
         <Navbar />
-        {this.state.answers.length === 0 ? (
-          <div style={{textAlign: "center",color: "red",position: "relative",fontSize: "2rem"}}>
-            Tüm soruları dogru cevapladınız.Tekrar Kelime ekleyebilirisin !
-          </div>
-        ) : (
-          <div>
-            <Quiz
-              questionId={this.state.questionId}
-              answer={this.state.answer}
-              answerOptions={this.state.answers}
-              question={this.state.question}
-              onAnswerSelected={this.handleAnswerSelected}
-            />
-          </div>
-        )}
+        {
+          this.state.words.filter(word => {
+          let date = moment.utc().format("YYYY-MM-DDTHH:mm:ss") + "Z";
+          return word.date < date || word.date === null ? word.date : null;
+        }).map(word => {
+          console.log(moment(word.date).utc().format("YYYY-MM-DDTHH:mm:ss"));
+        })
+        
+        }
+        {this.renderQuiz()}
       </div>
     );
   }
