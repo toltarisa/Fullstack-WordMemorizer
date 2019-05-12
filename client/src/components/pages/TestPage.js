@@ -9,8 +9,8 @@ class TestPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      counter: 1,
-      questionId: 1,
+      counter: 0,
+      questionId: 0,
       question: "",
       answer: "",
       answers: [],
@@ -39,7 +39,6 @@ class TestPage extends Component {
 
   handleAnswerSelected = event => {
     this.setUserAnswer(event.currentTarget.value);
-    console.log(this.state.answer);
 
     if (this.state.questionId < this.state.words.length) {
       setTimeout(() => this.setNextQuestion(), 300);
@@ -74,6 +73,8 @@ class TestPage extends Component {
     const getTranslateOfWords = data.map(word => {
       return word.translate;
     });
+    /* Eger state'teki answer degiskenine atanan cevabımız sadece 
+    cevapları cektigimiz array icinde mevcut ise soru dogru*/
     if (getTranslateOfWords.includes(this.state.answer)) {
       let obj = {
         date:
@@ -126,10 +127,26 @@ class TestPage extends Component {
     axios
       .get("/words")
       .then(res => {
+        /* filtered degiskenine objemizdeki level degiskeninin degeri 
+        0 olanları tekrar assign edip state'i set ediyoruz.Boylece bu sayfada sadece yeni eklenen kelimeler sorulacak */
+        const filtered = res.data.reduce((filtered, option) => {
+          if (option.level === 0) {
+            let newQuestions = {
+              _id:option._id,
+              word: option.word,
+              translate: option.translate,
+              kind: option.kind,
+              date: option.date,
+              level:option.level
+            };
+            filtered.push(newQuestions);
+          }
+          return filtered;
+        }, []);
         this.setState({
-          id: res.data[0]._id,
-          question: res.data[0].word,
-          words: res.data,
+          id: filtered[0]._id,
+          question: filtered[0].word,
+          words: filtered,
           err: ""
         });
         let data = [...this.state.words];
@@ -143,15 +160,6 @@ class TestPage extends Component {
     return (
       <div className="main">
         <Navbar />
-        {
-          this.state.words.filter(word => {
-          let date = moment.utc().format("YYYY-MM-DDTHH:mm:ss") + "Z";
-          return word.date < date || word.date === null ? word.date : null;
-        }).map(word => {
-          console.log(moment(word.date).utc().format("YYYY-MM-DDTHH:mm:ss"));
-        })
-        
-        }
         {this.renderQuiz()}
       </div>
     );
