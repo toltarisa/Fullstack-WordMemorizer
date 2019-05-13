@@ -41,7 +41,8 @@ input[type="radio"]{
 .question {
   margin: 0;
   padding: 0.5rem 2.5rem 1.5rem 2.5rem;
-  
+  font-family:'Maven+Pro';
+  font-weight:400;
 }
 
 /* Animation */
@@ -78,4 +79,6 @@ input[type="radio"]{
 
 .textChart{
   text-align: center;
+  font-family: 'Maven+Pro';
+  font-weight:400;
 }

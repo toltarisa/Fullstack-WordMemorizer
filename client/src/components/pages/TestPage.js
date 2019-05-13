@@ -39,14 +39,9 @@ class TestPage extends Component {
 
   handleAnswerSelected = event => {
     this.setUserAnswer(event.currentTarget.value);
-
     if (this.state.questionId < this.state.words.length) {
       setTimeout(() => this.setNextQuestion(), 300);
-      this.getMeRandomElements(
-        randomAnswer,
-        3,
-        this.state.words[this.state.counter].translate
-      );
+      this.getMeRandomElements(randomAnswer,3,this.state.words[this.state.counter].translate);
     }
   };
 
@@ -68,6 +63,27 @@ class TestPage extends Component {
     });
   };
 
+  setLevelOfWord = (time,kind,level) => {
+    let obj = {
+      date:moment(Date.now()).add(time, kind).local().format("YYYY-MM-DDTHH:mm:ss") + "Z",
+      level: level
+    };
+    axios.put(`http://localhost:3001/words/update/${this.state.id}`, obj);
+  }
+  checkAndSetLevel = (word) => {
+      switch(word[this.state.counter].level){
+        case 0 : this.setLevelOfWord(1,"minutes",1);
+        break;
+        case 1 :this.setLevelOfWord(1,"week",2);
+        break;
+        case 2 : this.setLevelOfWord(1,"month",3);
+        break;
+        case 3 : this.setLevelOfWord(6,"month",4);
+        break; 
+        default: this.setLevelOfWord(null,null,0);
+      }
+  } 
+
   checkQuestion = () => {
     let data = [...this.state.words];
     const getTranslateOfWords = data.map(word => {
@@ -75,15 +91,10 @@ class TestPage extends Component {
     });
     /* Eger state'teki answer degiskenine atanan cevabımız sadece 
     cevapları cektigimiz array icinde mevcut ise soru dogru*/
+    const word = data.map(word =>  word);
     if (getTranslateOfWords.includes(this.state.answer)) {
-      let obj = {
-        date:
-          moment(Date.now())
-            .add(10, "minutes")
-            .format("YYYY-MM-DDTHH:mm:ss") + "Z",
-        level: 1
-      };
-      axios.put(`http://localhost:3001/words/update/${this.state.id}`, obj);
+      
+      this.checkAndSetLevel(word);
       Toastify({
         text: "Doğru Cevap",
         backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
@@ -104,11 +115,10 @@ class TestPage extends Component {
       }).showToast();
     }
   };
-
   componentDidMount() {
-    this.getWordData();
+    this.getWordDataForFirst();
+    this.getWordDataForLevel1();
   }
-
   renderQuiz = () => {
     return (
       <div>
@@ -122,31 +132,51 @@ class TestPage extends Component {
       </div>
     );
   };
-
-  getWordData = () => {
+  getWordDataForLevel1 = () => {
+    axios
+      .get("/test/tenminutelater")
+      .then(res => {
+        res.data.map(word => {
+          let date = moment.utc(word.date).local().format('YYYY-MM-DD HH:mm:ss')
+          let now = moment.utc().local().format('YYYY-MM-DD HH:mm:ss');
+          
+          //console.log(moment.duration(date.diff(now)));
+          if(date === now){
+            this.setState({
+              id:res.data[0]._id,
+              question:res.data[0].word,
+              words:res.data
+            })
+            let data = [...this.state.words];
+            this.getMeRandomElements(randomAnswer, 3, data[0].translate);
+          }
+        })
+      })
+  }
+  getWordDataForFirst = () => {
     axios
       .get("/words")
       .then(res => {
         /* filtered degiskenine objemizdeki level degiskeninin degeri 
         0 olanları tekrar assign edip state'i set ediyoruz.Boylece bu sayfada sadece yeni eklenen kelimeler sorulacak */
-        const filtered = res.data.reduce((filtered, option) => {
-          if (option.level === 0) {
+        const filteredWords = res.data.reduce((filteredArray, word) => {
+          if (word.level === 0) {
             let newQuestions = {
-              _id:option._id,
-              word: option.word,
-              translate: option.translate,
-              kind: option.kind,
-              date: option.date,
-              level:option.level
+              _id:word._id,
+              word: word.word,
+              translate: word.translate,
+              kind: word.kind,
+              date: word.date,
+              level:word.level
             };
-            filtered.push(newQuestions);
+            filteredArray.push(newQuestions);
           }
-          return filtered;
+          return filteredArray;
         }, []);
         this.setState({
-          id: filtered[0]._id,
-          question: filtered[0].word,
-          words: filtered,
+          id: filteredWords[0]._id,
+          question: filteredWords[0].word,
+          words: filteredWords,
           err: ""
         });
         let data = [...this.state.words];
@@ -160,10 +190,9 @@ class TestPage extends Component {
     return (
       <div className="main">
         <Navbar />
-        {this.renderQuiz()}
+        {this.state.words.length === 0 ? <h1 className="textChart">Tüm soruları doğru cevaplandırdın.Yeni Kelimeler Ekleyebilirsin</h1>:this.renderQuiz()}
       </div>
     );
   }
 }
-
 export default TestPage;

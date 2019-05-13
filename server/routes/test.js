@@ -11,8 +11,8 @@ router.get('/tenminutelater', (req,res) => {
                 "translate" :1,
                 "kind":1,
                 "exampleSentence":1,
-                "date":1
-
+                "date":1,
+                "level":1
             }}
         ]
     ).then(data => {
