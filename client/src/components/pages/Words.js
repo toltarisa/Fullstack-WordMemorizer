@@ -95,17 +95,15 @@ class Album extends Component {
         <Navbar className={classes.appBar} />
         <main>
           {this.state.words.length === 0 ? (
-            <div
+            <h1
               style={{
-                display: "flex",
-                color: "red",
-                justifyContent: "center",
-                alignItems: "center",
-                fontSize: "2rem"
+                textAlign: 'center',
+                fontFamily:'Maven+Pro',
+                fontWeight:400
               }}
             >
               Kelimeniz Bulunmuyor.Lütfen Kelime Ekleyin
-            </div>
+            </h1>
           ) : (
             <div>
               <HeroUnit classes={classes} />

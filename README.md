@@ -1,1 +1,3 @@
-FullStack word memorizer app for software construction lecture
+# FullStack Word Memorizer 
+
+### Techonologies that I used in this project

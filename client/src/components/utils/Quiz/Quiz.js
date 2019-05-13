@@ -32,6 +32,8 @@ const Quiz = props => {
         <ul className="answerOption">
           {props.answerOptions.map(renderAnswerOptions)}
         </ul>
+        <p className="textChart">Ipucu : {props.exampleSentence}</p>
+        <p className="textChart">Sorunun Seviyesi : {props.level}</p>
         </div>
       </CSSTransitionGroup>
         

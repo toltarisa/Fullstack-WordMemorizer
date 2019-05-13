@@ -13,6 +13,7 @@ class TestPage extends Component {
       questionId: 0,
       question: "",
       answer: "",
+      exampleSentence:'',
       answers: [],
       words: [],
       id: "",
@@ -127,6 +128,8 @@ class TestPage extends Component {
           answer={this.state.answer}
           answerOptions={this.state.answers}
           question={this.state.question}
+          exampleSentence={this.state.exampleSentence}
+          level={this.state.level}
           onAnswerSelected={this.handleAnswerSelected}
         />
       </div>
@@ -145,7 +148,9 @@ class TestPage extends Component {
             this.setState({
               id:res.data[0]._id,
               question:res.data[0].word,
-              words:res.data
+              words:res.data,
+              exampleSentence:res.data[0].exampleSentence,
+              level:res.data[0].level
             })
             let data = [...this.state.words];
             this.getMeRandomElements(randomAnswer, 3, data[0].translate);
