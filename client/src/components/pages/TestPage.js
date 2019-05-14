@@ -14,6 +14,7 @@ class TestPage extends Component {
       question: "",
       answer: "",
       exampleSentence:'',
+      kind:'',
       answers: [],
       words: [],
       id: "",
@@ -54,7 +55,10 @@ class TestPage extends Component {
       counter: counter,
       questionId: questionId,
       id: this.state.words[this.state.counter]._id,
-      question: this.state.words[this.state.counter].word
+      question: this.state.words[this.state.counter].word,
+      level:this.state.words[this.state.counter].level,
+      exampleSentence:this.state.words[this.state.counter].exampleSentence,
+      kind:this.state.words[this.state.counter].kind,
     });
   };
 
@@ -63,6 +67,15 @@ class TestPage extends Component {
       answer: answer
     });
   };
+  showToast = (text,color) => {
+    Toastify({
+      text: text,
+      backgroundColor: color,
+      positionLeft: true,
+      duration: 500,
+      gravity: "bottom"
+    }).showToast();
+  }
 
   setLevelOfWord = (time,kind,level) => {
     let obj = {
@@ -73,15 +86,15 @@ class TestPage extends Component {
   }
   checkAndSetLevel = (word) => {
       switch(word[this.state.counter].level){
-        case 0 : this.setLevelOfWord(1,"minutes",1);
+        case 0 : this.setLevelOfWord(10,"minutes",1);
         break;
         case 1 :this.setLevelOfWord(1,"week",2);
         break;
         case 2 : this.setLevelOfWord(1,"month",3);
         break;
-        case 3 : this.setLevelOfWord(6,"month",4);
+        case 3 : this.setLevelOfWord(3,"month",4);
         break; 
-        default: this.setLevelOfWord(null,null,0);
+        default: this.setLevelOfWord(20,"minutes",0);
       }
   } 
 
@@ -94,26 +107,15 @@ class TestPage extends Component {
     cevapları cektigimiz array icinde mevcut ise soru dogru*/
     const word = data.map(word =>  word);
     if (getTranslateOfWords.includes(this.state.answer)) {
-      
       this.checkAndSetLevel(word);
-      Toastify({
-        text: "Doğru Cevap",
-        backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
-        positionLeft: true,
-        duration: 500,
-        gravity: "bottom"
-      }).showToast();
+      let color = "linear-gradient(to right, #00b09b, #96c93d)";
+      this.showToast("Dogru Cevap",color);
       this.setState({
         answer: ""
       });
     } else {
-      Toastify({
-        text: "Yanlış Cevap",
-        backgroundColor: "red",
-        positionLeft: true,
-        duration: 500,
-        gravity: "bottom"
-      }).showToast();
+      this.showToast("Yanlıs Cevap","red");
+      this.checkAndSetLevel(word);
     }
   };
   componentDidMount() {
@@ -130,6 +132,7 @@ class TestPage extends Component {
           question={this.state.question}
           exampleSentence={this.state.exampleSentence}
           level={this.state.level}
+          kind={this.state.kind}
           onAnswerSelected={this.handleAnswerSelected}
         />
       </div>
@@ -144,13 +147,14 @@ class TestPage extends Component {
           let now = moment.utc().local().format('YYYY-MM-DD HH:mm:ss');
           
           //console.log(moment.duration(date.diff(now)));
-          if(date === now){
+          if(date <= now){
             this.setState({
               id:res.data[0]._id,
               question:res.data[0].word,
               words:res.data,
               exampleSentence:res.data[0].exampleSentence,
-              level:res.data[0].level
+              level:res.data[0].level,
+              kind:res.data[0].kind
             })
             let data = [...this.state.words];
             this.getMeRandomElements(randomAnswer, 3, data[0].translate);
@@ -172,7 +176,8 @@ class TestPage extends Component {
               translate: word.translate,
               kind: word.kind,
               date: word.date,
-              level:word.level
+              level:word.level,
+              exampleSentence:word.exampleSentence
             };
             filteredArray.push(newQuestions);
           }
@@ -181,6 +186,9 @@ class TestPage extends Component {
         this.setState({
           id: filteredWords[0]._id,
           question: filteredWords[0].word,
+          level:filteredWords[0].level,
+          exampleSentence:filteredWords[0].exampleSentence,
+          kind:filteredWords[0].kind,
           words: filteredWords,
           err: ""
         });

@@ -1,18 +1,67 @@
-import React from "react";
-import ReactChartkick, { ColumnChart } from 'react-chartkick'
-import Chart from 'chart.js'
+import React, { Component } from "react";
+
 import Navbar from "../common/Navbar";
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import InputLabel from '@material-ui/core/InputLabel';
+import Input from '@material-ui/core/Input';
+import MonthlyStats from '../utils/MonthlyChart';
+import DailyStats from '../utils/DailyChart';
 
-ReactChartkick.addAdapter(Chart);
+class Stats extends Component {
+  state = {
+    value:1
+  };
 
-const Stats = () => {
+    handleChange = event => {
+        this.setState({ value: event.target.value });
+      };
+
+      renderCharts = () =>{
+          if(this.state.value === 1){
+              return (
+                  <DailyStats />
+              )
+          }
+          else if(this.state.value === 2){
+              return (
+                  <MonthlyStats />
+              )
+          }
+          else{
+            return (
+                <DailyStats />
+            )
+          }
+      }
+  render() {
+      console.log(this.state.stats);
+      console.log(this.state.value);
+      const classes = this.props;
     return (
-        <div>
-            <Navbar/>
-            <h2 className="textChart">Aylara Göre Öğrenilen Kelime Sayıları</h2>
-            <ColumnChart data={[["Ocak", 32], ["Şubat", 46], ["Mart", 28],["Nisan", 21],['Mayıs',19],["Haziran", 32],["Temmuz", 25],["Ağustos", 28],["Eylül", 28],["Ekim", 28],["Kasım", 28],["Aralık",17]]} />
+      <div>
+        <Navbar />
+        <div className="select">
+        <h3>Aylık veya Günlük istatistikleri görüntüle</h3>
+        <FormControl className={classes.formControl}>
+          <InputLabel htmlFor="stats-helper">Seç</InputLabel>
+          <Select
+            value={this.state.age}
+            onChange={this.handleChange}
+            input={<Input name="stats" id="stats-helper" />}
+          >
+            <MenuItem value={1}>Günlük</MenuItem>
+            <MenuItem value={2}>Aylık</MenuItem>
+          </Select>
+          
+        </FormControl>
+        <br/>
         </div>
+        {this.renderCharts()}
+      </div>
     );
+  }
 }
 
 export default Stats;

@@ -10,7 +10,7 @@ code {
 .container {
   position: relative;
   max-width: 510px;
-  height:250px;
+  height:300px;
   margin: 0 auto;
   background: #ddd;
   border-radius: 3px;
@@ -25,9 +25,6 @@ code {
 
 input[type="radio"]{
   transform: scale(1.5);
-}
-.result {
-  padding: 1.5rem 2.5rem;
 }
 
 .answerOption {
@@ -81,4 +78,11 @@ input[type="radio"]{
   text-align: center;
   font-family: 'Maven+Pro';
   font-weight:400;
+}
+
+.select{
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
