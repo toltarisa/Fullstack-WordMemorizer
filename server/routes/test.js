@@ -2,10 +2,10 @@ const express = require("express");
 const router = express.Router();
 const Word = require("../models/Word");
 
-router.get('/tenminutelater', (req,res) => {
+router.get('/getbytime', (req,res) => {
     Word.aggregate(
         [
-            {$match : {"level":1}},
+            {$match : {"level":{$in:[1,2,3]}}},
             {$project: {
                 "word":1,
                 "translate" :1,
@@ -22,24 +22,19 @@ router.get('/tenminutelater', (req,res) => {
     })
 })
 
-router.get('/oneweeklater', (req,res) => {
+router.get('/getmemorizedwords', (req, res) => {
     Word.aggregate(
         [
-            {$match : {"level":2}},
-            {$project: {
-                "word":1,
-                "translate" :1,
-                "kind":1,
-                "exampleSentence":1,
+            {$match: {"level":4}},
+            {$project:{
+                "level":1,
                 "date":1
-
             }}
         ]
     ).then(data => {
         res.status(200).json(data);
     }).catch(err => {
-        throw err ; 
+        throw err ; //catch ile hata yakalama
     })
 })
-
 module.exports = router;

@@ -16,12 +16,12 @@
 
 ## Kullandığım Paketler ve Kütüphaneler
 
--[React](https://github.com/facebook/react)<br>
--[Node.js](https://github.com/nodejs/node)<br>
--[Express.js](https://github.com/expressjs/express)<br>
--[Mongoose](https://github.com/Automattic/mongoose)<br>
--[Material UI](https://material-ui.com/)<br>
--[Toastify.js](https://github.com/apvarun/toastify-js)<br>
+- [React](https://github.com/facebook/react)<br>
+- [Node.js](https://github.com/nodejs/node)<br>
+- [Express.js](https://github.com/expressjs/express)<br>
+- [Mongoose](https://github.com/Automattic/mongoose)<br>
+- [Material UI](https://material-ui.com/)<br>
+- [Toastify.js](https://github.com/apvarun/toastify-js)<br>
 
 ## Backend tarafında kullandığım Endpointler
 ``` http://localhost:3001/words/ ``` 

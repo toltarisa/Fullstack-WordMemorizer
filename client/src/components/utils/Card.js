@@ -120,6 +120,9 @@ class CardComponent extends Component {
             <Typography gutterBottom variant="subtitle2">
               <b>Örnek : </b> {this.props.object.exampleSentence}
             </Typography>
+            <Typography gutterBottom variant="subtitle2">
+              <b>Seviye : </b> {this.props.object.level}
+            </Typography>
           </CardContent>
           <CardActions>
             <Button

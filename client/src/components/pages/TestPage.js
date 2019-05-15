@@ -48,17 +48,14 @@ class TestPage extends Component {
   };
 
   setNextQuestion = () => {
-    this.checkQuestion();
     let counter = this.state.counter + 1;
     let questionId = this.state.questionId + 1;
+    this.checkQuestion();
     this.setState({
       counter: counter,
       questionId: questionId,
       id: this.state.words[this.state.counter]._id,
       question: this.state.words[this.state.counter].word,
-      level:this.state.words[this.state.counter].level,
-      exampleSentence:this.state.words[this.state.counter].exampleSentence,
-      kind:this.state.words[this.state.counter].kind,
     });
   };
 
@@ -86,13 +83,13 @@ class TestPage extends Component {
   }
   checkAndSetLevel = (word) => {
       switch(word[this.state.counter].level){
-        case 0 : this.setLevelOfWord(10,"minutes",1);
+        case 0 : this.setLevelOfWord(2,"minutes",1);
         break;
-        case 1 :this.setLevelOfWord(1,"week",2);
+        case 1 :this.setLevelOfWord(2,"minutes",2);
         break;
-        case 2 : this.setLevelOfWord(1,"month",3);
+        case 2 : this.setLevelOfWord(2,"minutes",3);
         break;
-        case 3 : this.setLevelOfWord(3,"month",4);
+        case 3 : this.setLevelOfWord(2,"minutes",4);
         break; 
         default: this.setLevelOfWord(20,"minutes",0);
       }
@@ -122,6 +119,7 @@ class TestPage extends Component {
     this.getWordDataForFirst();
     this.getWordDataForLevel1();
   }
+
   renderQuiz = () => {
     return (
       <div>
@@ -140,24 +138,23 @@ class TestPage extends Component {
   };
   getWordDataForLevel1 = () => {
     axios
-      .get("/test/tenminutelater")
+      .get("/test/getbytime")
       .then(res => {
         res.data.map(word => {
-          let date = moment.utc(word.date).local().format('YYYY-MM-DD HH:mm:ss')
+          let date = moment.utc(word.date).format('YYYY-MM-DD HH:mm:ss');
           let now = moment.utc().local().format('YYYY-MM-DD HH:mm:ss');
           
-          //console.log(moment.duration(date.diff(now)));
           if(date <= now){
             this.setState({
-              id:res.data[0]._id,
-              question:res.data[0].word,
+              id:word._id,
+              question:word.word,
               words:res.data,
-              exampleSentence:res.data[0].exampleSentence,
-              level:res.data[0].level,
-              kind:res.data[0].kind
+              exampleSentence:word.exampleSentence,
+              level:word.level,
+              kind:word.kind
             })
-            let data = [...this.state.words];
-            this.getMeRandomElements(randomAnswer, 3, data[0].translate);
+            //let data = [...this.state.words];
+            this.getMeRandomElements(randomAnswer, 3, word.translate);
           }
         })
       })
