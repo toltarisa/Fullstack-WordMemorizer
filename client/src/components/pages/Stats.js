@@ -24,20 +24,13 @@ class Stats extends Component {
                   <DailyStats />
               )
           }
-          else if(this.state.value === 2){
-              return (
-                  <MonthlyStats />
-              )
-          }
           else{
             return (
-                <DailyStats />
+              <MonthlyStats />
             )
           }
       }
   render() {
-      console.log(this.state.stats);
-      console.log(this.state.value);
       const classes = this.props;
     return (
       <div>
@@ -63,5 +56,6 @@ class Stats extends Component {
     );
   }
 }
+
 
 export default Stats;

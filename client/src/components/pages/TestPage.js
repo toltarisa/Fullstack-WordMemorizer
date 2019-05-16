@@ -45,6 +45,11 @@ class TestPage extends Component {
       setTimeout(() => this.setNextQuestion(), 300);
       this.getMeRandomElements(randomAnswer,3,this.state.words[this.state.counter].translate);
     }
+    if(this.state.counter === this.state.words.length){
+      this.setState({
+        words:[]
+      })
+    }
   };
 
   setNextQuestion = () => {
@@ -197,6 +202,7 @@ class TestPage extends Component {
       });
   };
   render() {
+    //console.log(this.state.words);
     return (
       <div className="main">
         <Navbar />
