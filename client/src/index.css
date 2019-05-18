@@ -79,6 +79,16 @@ input[type="radio"]{
   font-family: 'Maven+Pro';
   font-weight:400;
 }
+.btn{
+  width:120px;
+  height:45px;
+  position: relative;
+  left:630px;
+  border-radius: 10px;
+  background :blue;
+  color:white;
+  
+}
 
 .select{
   display:flex;

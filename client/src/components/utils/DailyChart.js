@@ -16,7 +16,9 @@ class DailyChart extends Component {
       this.setState({
         words: res.data
       });
-    });
+    }).catch(err => {
+      throw err;
+    })
   };
 
   calculateDailyData = () => {
@@ -29,7 +31,7 @@ class DailyChart extends Component {
       sun = 0;
     const memorizedWords = [...this.state.words];
      memorizedWords.map(word => {
-      const date = moment(word.date).format("dddd");
+      const date = moment(word.date).utc().format("dddd");
       switch (date) {
         case "Monday":
           mon = mon + 1;
@@ -76,21 +78,31 @@ class DailyChart extends Component {
     
   }
   render() {
-    console.log(this.state.data);
+    const data = this.state.data.map(object => {
+      return object.obj.map(day => {
+        return {x:day.x,y:day.y};
+      });
+    }).map(val => {
+      return val;
+    })
     return (
       <div>
-        <h2 onClick={this.calculateDailyData} className="textChart">Günlere Göre Öğrenilen Kelime Sayıları</h2>
-        <ColumnChart
-          data={[
-            ["Pazartesi", 4],
-            ["Salı", 5],
-            ["Çarşamba", 2],
-            ["Perşembe", 6],
-            ["Cuma", 3],
-            ["Cumartesi", 7],
-            ["Pazar", 4]
-          ]}
+        <h2 className="textChart">Günlere Göre Öğrenilen Kelime Sayıları</h2>
+        <button onClick={this.calculateDailyData} className="btn">Veriyi Al</button>
+        {data.map((value,index) => (
+          <ColumnChart
+          key={index}
+            data={[
+              [value[0].x, value[0].y],
+              [value[1].x, value[1].y],
+              [value[2].x, value[2].y],
+              [value[3].x, value[3].y],
+              [value[4].x, value[4].y],
+              [value[5].x, value[5].y],
+              [value[6].x, value[6].y]
+            ]}
         />
+        ))}
       </div>
     );
   }

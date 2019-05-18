@@ -38,8 +38,6 @@ class ShowCase extends Component {
       kind: "",
       example: "",
     };
-    this.postRequest = this.postRequest.bind(this);
-    this.handleInput = this.handleInput.bind(this);
   }
   openDialog = () => {
     this.setState({ open: !this.state.open });

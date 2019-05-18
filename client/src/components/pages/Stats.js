@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-
 import Navbar from "../common/Navbar";
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
@@ -10,9 +9,13 @@ import MonthlyStats from '../utils/MonthlyChart';
 import DailyStats from '../utils/DailyChart';
 
 class Stats extends Component {
-  state = {
-    value:1
-  };
+  constructor(props){
+    super(props);
+    console.log(props);
+    this.state = {
+      value:1
+    };
+  }
 
     handleChange = event => {
         this.setState({ value: event.target.value });
@@ -32,6 +35,7 @@ class Stats extends Component {
       }
   render() {
       const classes = this.props;
+     
     return (
       <div>
         <Navbar />

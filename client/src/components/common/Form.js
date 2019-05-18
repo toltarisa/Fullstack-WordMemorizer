@@ -82,6 +82,7 @@ export default class FormDialog extends React.Component {
             variant="outlined"
             onClick={this.props.onRequest}
             color="primary"
+            disabled={this.props.disabled}
           >
             Kelimeyi Ekle/Güncelle
           </Button>

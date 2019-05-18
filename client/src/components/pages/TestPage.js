@@ -41,17 +41,12 @@ class TestPage extends Component {
 
   handleAnswerSelected = event => {
     this.setUserAnswer(event.currentTarget.value);
-    if (this.state.questionId < this.state.words.length) {
-      setTimeout(() => this.setNextQuestion(), 300);
-      this.getMeRandomElements(randomAnswer,3,this.state.words[this.state.counter].translate);
+    if (this.state.questionId <= this.state.words.length) {
+      setTimeout(() => (this.setNextQuestion()), 300);
+      this.getMeRandomElements(randomAnswer,3,this.state.words[this.state.questionId].translate);
     }
-    if(this.state.counter === this.state.words.length){
-      this.setState({
-        words:[]
-      })
-    }
+    
   };
-
   setNextQuestion = () => {
     let counter = this.state.counter + 1;
     let questionId = this.state.questionId + 1;
@@ -61,6 +56,8 @@ class TestPage extends Component {
       questionId: questionId,
       id: this.state.words[this.state.counter]._id,
       question: this.state.words[this.state.counter].word,
+      answer:"",
+      words:[]
     });
   };
 
@@ -87,6 +84,7 @@ class TestPage extends Component {
     axios.put(`http://localhost:3001/words/update/${this.state.id}`, obj);
   }
   checkAndSetLevel = (word) => {
+    //console.log(word[this.state.counter].level);
       switch(word[this.state.counter].level){
         case 0 : this.setLevelOfWord(2,"minutes",1);
         break;
@@ -112,11 +110,10 @@ class TestPage extends Component {
       this.checkAndSetLevel(word);
       let color = "linear-gradient(to right, #00b09b, #96c93d)";
       this.showToast("Dogru Cevap",color);
-      this.setState({
-        answer: ""
-      });
     } else {
       this.showToast("Yanlıs Cevap","red");
+      /* Eğer Soru yanlış cevaplanırsa 20 dk sonrasına tekrar sorulmak üzere ertelenir.*/
+      //this.setLevelOfWord(10,"minutes",0);
       this.checkAndSetLevel(word);
     }
   };
@@ -124,7 +121,7 @@ class TestPage extends Component {
     this.getWordDataForFirst();
     this.getWordDataForLevel1();
   }
-
+  
   renderQuiz = () => {
     return (
       <div>
@@ -150,7 +147,7 @@ class TestPage extends Component {
           let now = moment.utc().local().format('YYYY-MM-DD HH:mm:ss');
           
           if(date <= now){
-            this.setState({
+             this.setState({
               id:word._id,
               question:word.word,
               words:res.data,
@@ -158,8 +155,7 @@ class TestPage extends Component {
               level:word.level,
               kind:word.kind
             })
-            //let data = [...this.state.words];
-            this.getMeRandomElements(randomAnswer, 3, word.translate);
+           this.getMeRandomElements(randomAnswer, 3, word.translate);
           }
         })
       })
@@ -186,23 +182,22 @@ class TestPage extends Component {
           return filteredArray;
         }, []);
         this.setState({
-          id: filteredWords[0]._id,
-          question: filteredWords[0].word,
-          level:filteredWords[0].level,
-          exampleSentence:filteredWords[0].exampleSentence,
-          kind:filteredWords[0].kind,
+          id: filteredWords[this.state.counter]._id,
+          question: filteredWords[this.state.counter].word,
+          level:filteredWords[this.state.counter].level,
+          exampleSentence:filteredWords[this.state.counter].exampleSentence,
+          kind:filteredWords[this.state.counter].kind,
           words: filteredWords,
           err: ""
         });
         let data = [...this.state.words];
-        this.getMeRandomElements(randomAnswer, 3, data[0].translate);
+        this.getMeRandomElements(randomAnswer, 3, data[this.state.counter].translate);
       })
       .catch(err => {
         this.setState({ err: err });
       });
   };
   render() {
-    //console.log(this.state.words);
     return (
       <div className="main">
         <Navbar />
