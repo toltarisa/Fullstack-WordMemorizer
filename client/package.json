@@ -11,6 +11,7 @@
     "moment": "^2.24.0",
     "react": "^16.8.4",
     "react-chartkick": "^0.3.0",
+    "react-datepicker": "^2.5.0",
     "react-dom": "^16.8.4",
     "react-router": "^5.0.0",
     "react-router-dom": "^5.0.0",

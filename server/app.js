@@ -6,6 +6,9 @@ const logger = require('morgan');
 const indexRouter = require('./routes/index');
 const wordRoutes = require('./routes/word');
 const testRoutes = require('./routes/test');
+const bodyParser = require('body-parser');
+
+
 
 
 
@@ -21,6 +24,14 @@ app.use(function(req, res, next) {
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
   next();
 });
+
+app.use(
+  bodyParser.urlencoded({
+    extended: false
+  })
+)
+
+app.use(bodyParser.json())
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

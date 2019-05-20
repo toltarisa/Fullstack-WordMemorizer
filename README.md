@@ -22,6 +22,8 @@
 - [Mongoose](https://github.com/Automattic/mongoose)<br>
 - [Material UI](https://material-ui.com/)<br>
 - [Toastify.js](https://github.com/apvarun/toastify-js)<br>
+- [Axios](https://github.com/axios/axios)<br>
+- [React Chartkit](https://github.com/ankane/react-chartkick)<br>
 
 ## Backend tarafında kullandığım Endpointler
 ``` http://localhost:3001/words/ ``` 
@@ -33,6 +35,7 @@
 | /words/:id | `POST` | {'word':'Mouse', 'translate':'Fare', 'kind':'İsim','exampleSentence':'We caught the mouse','level':0, date:null, } | create a new word |
 | /words/update/:id | `PUT` | {'word':'Mouse', 'translate':'Fare', 'kind':'İsim','exampleSentence':'We caught the mouse','level':0, date:null, } | Update word by id. |
 | /words/delete/:id | `DELETE` | Empty | Delete word by id. |
+| /test/getmemorizedwords | `GET` | {"_id": "5ce1a87329aed62b3831c08b","level": 4,"date": "2019-05-19T22:12:24.000Z"} | Get Words with level:4 |
 
 
 ## Ekran Görüntüleri

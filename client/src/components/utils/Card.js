@@ -8,6 +8,7 @@ import Typography from "@material-ui/core/Typography";
 import axios from "axios";
 import Toastify from "toastify-js";
 import Form from "../common/Form";
+import moment from 'moment';
 
 
 class CardComponent extends Component {
@@ -122,6 +123,9 @@ class CardComponent extends Component {
             </Typography>
             <Typography gutterBottom variant="subtitle2">
               <b>Seviye : </b> {this.props.object.level}
+            </Typography>
+            <Typography gutterBottom variant="subtitle2">
+              <b>Öğrenilme Tarihi : </b> {moment(this.props.object.date).utc().local().format('DD:MM:YYYY')}
             </Typography>
           </CardContent>
           <CardActions>

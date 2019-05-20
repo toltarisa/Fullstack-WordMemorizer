@@ -27,7 +27,7 @@ const Quiz = props => {
         transitionAppearTimeout={500}
       >
       
-        <div key={props.questionId}>
+        <div /*key={props.questionId}*/ >
         <Question question={props.question} />
         <ul className="answerOption">
           {props.answerOptions.map(renderAnswerOptions)}

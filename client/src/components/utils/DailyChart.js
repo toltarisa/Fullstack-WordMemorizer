@@ -3,25 +3,35 @@ import ReactChartkick, { ColumnChart } from "react-chartkick";
 import Chart from "chart.js";
 import axios from "axios";
 import moment from "moment";
+//import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 ReactChartkick.addAdapter(Chart);
 class DailyChart extends Component {
   state = {
     words: [],
-    data:[]
+    data: [],
+    // startDate: null,
+    // endDate: null
   };
-
-  getMeorizedWords = () => {
-    axios.get("/test/getmemorizedwords").then(res => {
-      this.setState({
-        words: res.data
+  getMemorizedWords = () => {
+    // let obj= {start: this.state.startDate,
+    //   end: this.state.endDate}
+    //   console.log(obj);
+    axios
+      .get("test/getmemorizedwords")
+      .then(res => {
+        this.setState({
+          words: res.data
+        });
+        this.calculateDailyData();
+      })
+      .catch(err => {
+        throw err;
       });
-    }).catch(err => {
-      throw err;
-    })
   };
-
   calculateDailyData = () => {
+    
     let mon = 0,
       tue = 0,
       wed = 0,
@@ -30,8 +40,10 @@ class DailyChart extends Component {
       sat = 0,
       sun = 0;
     const memorizedWords = [...this.state.words];
-     memorizedWords.map(word => {
-      const date = moment(word.date).utc().format("dddd");
+    memorizedWords.map(word => {
+      const date = moment(word.date)
+        .utc()
+        .format("dddd");
       switch (date) {
         case "Monday":
           mon = mon + 1;
@@ -55,43 +67,54 @@ class DailyChart extends Component {
           sun = sun + 1;
           break;
         default:
-          console.log(moment(word).utc().local().format("dddd"));
+          console.log(
+            moment(word.date)
+              .utc()
+              .local()
+              .format("dddd")
+          );
       }
-      let object = [
-        {
-          obj: [
-            { x: "Pazartesi", y: mon },
-            { x: "Salı", y: tue },
-            { x: "Çarşamba", y: wed },
-            { x: "Perşembe", y: thu },
-            { x: "Cuma", y: fri },
-            { x: "Cumartesi", y: sat },
-            { x: "Pazar", y: sun }
-          ]
-        }
-      ];
-      this.setState({data:object});
     });
+    let object = [
+      {
+        obj: [
+          { x: "Pazartesi", y: mon },
+          { x: "Salı", y: tue },
+          { x: "Çarşamba", y: wed },
+          { x: "Perşembe", y: thu },
+          { x: "Cuma", y: fri },
+          { x: "Cumartesi", y: sat },
+          { x: "Pazar", y: sun }
+        ]
+      }
+    ];
+      this.setState({ data: object });
   };
+
   componentDidMount() {
-    this.getMeorizedWords();
     
   }
   render() {
-    const data = this.state.data.map(object => {
-      return object.obj.map(day => {
-        return {x:day.x,y:day.y};
+    //console.log(this.state.words)
+    const data = this.state.data
+      .map(object => {
+        return object.obj.map(day => {
+          return { x: day.x, y: day.y };
+        });
+      })
+      .map(val => {
+        return val;
       });
-    }).map(val => {
-      return val;
-    })
     return (
       <div>
         <h2 className="textChart">Günlere Göre Öğrenilen Kelime Sayıları</h2>
-        <button onClick={this.calculateDailyData} className="btn">Veriyi Al</button>
-        {data.map((value,index) => (
+        <button onClick={this.getMemorizedWords} className="btn">
+          Veriyi Al
+        </button>
+
+        {data.map((value, index) => (
           <ColumnChart
-          key={index}
+            key={index}
             data={[
               [value[0].x, value[0].y],
               [value[1].x, value[1].y],
@@ -101,7 +124,7 @@ class DailyChart extends Component {
               [value[5].x, value[5].y],
               [value[6].x, value[6].y]
             ]}
-        />
+          />
         ))}
       </div>
     );

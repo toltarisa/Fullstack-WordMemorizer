@@ -41,23 +41,25 @@ class TestPage extends Component {
 
   handleAnswerSelected = event => {
     this.setUserAnswer(event.currentTarget.value);
-    if (this.state.questionId <= this.state.words.length) {
-      setTimeout(() => (this.setNextQuestion()), 300);
-      this.getMeRandomElements(randomAnswer,3,this.state.words[this.state.questionId].translate);
-    }
+    do {
+      setTimeout(() => (this.setNextQuestion()), 400);
+      this.getMeRandomElements(randomAnswer,3,this.state.words[this.state.questionId] && this.state.words[this.state.questionId].translate);
+    }while(this.state.counter === this.state.words.length)
     
   };
   setNextQuestion = () => {
     let counter = this.state.counter + 1;
     let questionId = this.state.questionId + 1;
     this.checkQuestion();
+    if(this.state.words.length === 1){
+      this.setState({words:[]});
+    }
     this.setState({
       counter: counter,
       questionId: questionId,
-      id: this.state.words[this.state.counter]._id,
-      question: this.state.words[this.state.counter].word,
+      id: this.state.words[this.state.counter]&&this.state.words[this.state.counter]._id,
+      question: this.state.words[this.state.counter] && this.state.words[this.state.counter].word,
       answer:"",
-      words:[]
     });
   };
 
@@ -71,7 +73,7 @@ class TestPage extends Component {
       text: text,
       backgroundColor: color,
       positionLeft: true,
-      duration: 500,
+      duration: 1000,
       gravity: "bottom"
     }).showToast();
   }
@@ -85,7 +87,7 @@ class TestPage extends Component {
   }
   checkAndSetLevel = (word) => {
     //console.log(word[this.state.counter].level);
-      switch(word[this.state.counter].level){
+      switch(word[this.state.counter]&&word[this.state.counter].level){
         case 0 : this.setLevelOfWord(2,"minutes",1);
         break;
         case 1 :this.setLevelOfWord(2,"minutes",2);
@@ -97,7 +99,7 @@ class TestPage extends Component {
         default: this.setLevelOfWord(20,"minutes",0);
       }
   } 
-
+""
   checkQuestion = () => {
     let data = [...this.state.words];
     const getTranslateOfWords = data.map(word => {
@@ -112,9 +114,7 @@ class TestPage extends Component {
       this.showToast("Dogru Cevap",color);
     } else {
       this.showToast("Yanlıs Cevap","red");
-      /* Eğer Soru yanlış cevaplanırsa 20 dk sonrasına tekrar sorulmak üzere ertelenir.*/
-      //this.setLevelOfWord(10,"minutes",0);
-      this.checkAndSetLevel(word);
+      /* Eğer Soru yanlış cevaplanırsa diger sorular cevaplandıktan sonra tekrar sorulur */
     }
   };
   componentDidMount() {
@@ -135,6 +135,7 @@ class TestPage extends Component {
           kind={this.state.kind}
           onAnswerSelected={this.handleAnswerSelected}
         />
+
       </div>
     );
   };
@@ -201,7 +202,8 @@ class TestPage extends Component {
     return (
       <div className="main">
         <Navbar />
-        {this.state.words.length === 0 ? <h1 className="textChart">Tüm soruları doğru cevaplandırdın.Yeni Kelimeler Ekleyebilirsin</h1>:this.renderQuiz()}
+        <p class="textChart" onClick={this.getWordDataForLevel1}>Sonraki Soru</p>
+        {this.state.words.length === 0 ? <h1 className="textChart">Tüm soruları cevaplandırdın.Yeni Kelimeler Ekleyebilirsin</h1>:this.renderQuiz()}
       </div>
     );
   }
