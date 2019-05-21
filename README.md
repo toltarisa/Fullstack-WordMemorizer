@@ -63,3 +63,6 @@
 
 
 
+### TODO : 
+- Sorunun sorulma sıklığı hatasını çöz
+- User Register/Auth ekle
