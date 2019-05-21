@@ -1,6 +1,7 @@
 # FullStack Word Memorizer 
 
-### Projenin Amacı : ``` Kullanıcıların sisteme ingilizce kelime eklediği ve bu kelimeleri belli zaman aralıklarıyla quiz sorusu şeklinde sorarak İngilizce kelime öğretmeyi hedefleyen Web tabanlı uygulama ```
+### Projenin Amacı : 
+``` Kullanıcıların sisteme ingilizce kelime eklediği ve bu kelimeleri belli zaman aralıklarıyla quiz sorusu şeklinde sorarak İngilizce kelime öğretmeyi hedefleyen Web tabanlı uygulama ```
 
 <br>
 <br>
